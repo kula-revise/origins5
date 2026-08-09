@@ -6,49 +6,131 @@
 <title>Putting It Together | The Cold War: The Origins of the Cold War in Europe | Kula Revise</title>
 <style>
   /* ============================================================
-     IDENTITY BLOCK. This is the ONLY block you edit per series.
-     Everything below the block is the fixed mechanism and never changes.
+     KULA SOURCE ENGINE v3: TOKEN CONTRACT
+     This file is fixed mechanism. Do not edit it per series.
+     A skin sets the THIRTEEN identity variables in the block below
+     and nothing else is required of it.
+
      Two accents, split by job:
        --a1  accent one: navigation, progress, emphasis, option letters,
              the primary button, the story date. The "structure" accent.
-       --a2  accent two: anything the learner earned. correct answers,
+       --a2  accent two: anything the learner earned. Correct answers,
              the running summary, breakdown bars, key facts, the last
              story line. The "reward" accent.
-     Set --a1-rgb / --a2-rgb to the SAME colours as r,g,b (no #), so the
-     tints and shadows track the accents. One face for facts (serif),
-     one for structure (sans). See README for how to design a new skin.
+     Set --a1-rgb / --a2-rgb to the SAME colours as r,g,b (no #), because
+     the tints, washes and shadows are built from them.
      ============================================================ */
+
   :root {
-    /* grounds and ink */
-    --sand: #F2E9D9;   /* page background */
-    --paper: #FBF6EB;  /* cards */
-    --cut: #FFFCF4;    /* insets, sources, carousels */
-    --ink: #1B2A33;    /* body text */
-    --clay: #8C4A2F;   /* stage tags, quiet labels */
-    --fade: #7B7263;   /* muted text, captions */
-    /* the two accents */
-    --a1: #B4622D;   --a1-rgb: 180,98,45;    /* accent one */
-    --a2: #1F6B58;   --a2-rgb: 31,107,88;    /* accent two */
-    /* type: one face for facts, one for structure */
+    /* ---- THE IDENTITY CONTRACT. A skin overrides these thirteen. ---- */
+    --sand:  #F2E9D9;   /* page background */
+    --paper: #FBF6EB;   /* cards */
+    --cut:   #FFFCF4;   /* insets, sources, carousels */
+    --ink:   #1B2A33;   /* body text */
+    --clay:  #8C4A2F;   /* stage tags, quiet labels */
+    --fade:  #7B7263;   /* muted text, captions */
+    --a1: #B4622D;   --a1-rgb: 180,98,45;
+    --a2: #1F6B58;   --a2-rgb: 31,107,88;
     --serif: Georgia, 'Times New Roman', serif;
-    --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --sans:  system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --mono:  var(--sans);
+
+    /* ---- DERIVED TOKENS. A skin should not need to touch these. ----
+       They exist because the engine used to hardcode fourteen literal
+       colours, which is what made every glossary definition and every
+       source expander invisible in dark mode. Everything below now
+       tracks the identity variables above, so a skin that sets --fade
+       and --ink correctly gets a readable dark mode for free. ---- */
+    --muted:      var(--fade);          /* secondary body text: kt-def, toggle-body, disc-body, cover-line */
+    --hair:       rgba(0,0,0,0.12);     /* progress track, quiet rules */
+    --hair-strong:rgba(0,0,0,0.28);     /* dashed divider inside an expander */
+    --on-ink:     var(--paper);         /* text sitting on an --ink ground */
+    --on-a1:      var(--paper);         /* text sitting on an --a1 ground */
+    --on-a2:      var(--paper);         /* text sitting on an --a2 ground */
+    --ink-deep:   #12202a;              /* --ink one step darker, button hover */
+    --a2-deep:    #164C3F;              /* --a2 one step darker, button hover */
+    --ok-bg:      rgba(var(--a2-rgb),0.13);  /* a correct option, a placed item */
+    --no-bg:      rgba(140,74,47,0.13);      /* a wrong option, a misplaced item */
+    /* Skill chips. a = the entry-level skill (Extract, Argue, Evidence, Recall).
+       b = the middle skill (Interpret, Understand). c = unassessed instinct.
+       The top skill (Evaluate, Weigh, Apply) sits on a solid accent ground. */
+    --chip-a-bg: rgba(var(--a1-rgb),0.16);  --chip-a-fg: var(--a1);
+    --chip-b-bg: rgba(var(--a2-rgb),0.16);  --chip-b-fg: var(--a2);
+    --chip-c-bg: rgba(0,0,0,0.06);
+    --scrim:  rgba(27,42,51,0.5);       /* modal backdrop */
+    --inset:  rgba(255,255,255,0.4);    /* sort column well */
+
+    /* Legacy aliases. Older skins and the quiz shell reference these. */
+    --copper: var(--a1);
+    --malachite: var(--a2);
   }
 
-  /* Mode toggle, fixed bottom right. The skin supplies body.alt. */
+  /* ---- DARK MODE TOKEN RE-POINT ---------------------------------------
+     The skin supplies body.alt values for the thirteen identity variables.
+     Everything derived re-points here, once, for every unit. This is the
+     engine-level fix for the three defects logged in MOBILE_FIXES_HANDOVER:
+     a skin no longer needs the patch block at all.
+     ------------------------------------------------------------------- */
+  body.alt {
+    --muted:      var(--fade);
+    --hair:       rgba(255,255,255,0.14);
+    --hair-strong:rgba(255,255,255,0.26);
+    --on-ink:     var(--sand);
+    --on-a1:      var(--sand);
+    --on-a2:      var(--sand);
+    --ink-deep:   var(--ink);
+    --a2-deep:    var(--a2);
+    --ok-bg:      rgba(var(--a2-rgb),0.20);
+    --no-bg:      rgba(var(--a1-rgb),0.18);
+    --chip-a-bg:  rgba(var(--a1-rgb),0.22);  --chip-a-fg: var(--ink);
+    --chip-b-bg:  rgba(var(--a2-rgb),0.22);  --chip-b-fg: var(--ink);
+    --chip-c-bg:  rgba(255,255,255,0.10);
+    --scrim:  rgba(0,0,0,0.62);
+    --inset:  rgba(255,255,255,0.05);
+  }
+  /* Key term chips keep a visible edge once the ground inverts. */
+  body.alt .kt-term { border-color: var(--hair-strong); }
+  body.alt .kt-term summary { color: var(--ink); }
+  body.alt .kt-label { border-top-color: var(--hair-strong); }
+  /* v2 dimmed the options a learner did not pick; at 0.45 they vanish on a dark ground. */
+  body.alt .option.dimmed, body.alt .option-btn.dimmed { opacity: 0.72; }
+
+  /* ---- MODE TOGGLE. Fixed bottom right, 44px minimum tap target. ---- */
   .mode-toggle {
     position: fixed; bottom: 0.9rem; right: 0.9rem; z-index: 40;
     display: flex; align-items: center; gap: 0.4rem;
     font-family: var(--sans); font-size: 0.66rem; font-weight: 700;
     letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 0.55rem 0.75rem; min-height: 2.4rem;
+    padding: 0.62rem 0.75rem; min-height: 44px;
     background: var(--paper); color: var(--fade);
-    border: 1px solid rgba(0,0,0,0.18); cursor: pointer;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.16);
+    border: 1px solid var(--hair-strong); cursor: pointer;
+    box-shadow: 0 2px 12px var(--scrim);
   }
   .mode-toggle:hover { color: var(--ink); border-color: var(--a1); }
   .mode-toggle:focus-visible { outline: 2px solid var(--a1); outline-offset: 2px; }
   .mode-toggle svg { width: 0.9rem; height: 0.9rem; fill: none; stroke: currentColor; stroke-width: 1.6; }
+  @media (max-width: 520px) {
+    .mode-toggle { min-height: 44px; padding: 0.62rem 0.7rem; font-size: 0.64rem; }
+  }
   @media print { .mode-toggle { display: none; } }
+
+  /* ---- STICKY HEADER AT 360px --------------------------------------
+     .top-meta is a flex row and flex children default to min-width auto,
+     so at 360px the eyebrow and the step counter used to overlap. The
+     eyebrow now takes the free space and truncates rather than pushing
+     the counter off. Renders correctly at 375px and above either way,
+     which is why this was missed. 360 is common on mid-range Android.
+     ----------------------------------------------------------------- */
+  .top-meta { gap: 0.7rem; flex-wrap: nowrap; }
+  .top-meta > * { min-width: 0; }
+  .top-meta #lesson-tag, .top-meta .top-label {
+    flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .top-meta .top-count { flex: 0 0 auto; white-space: nowrap; }
+  @media (max-width: 380px) {
+    .top-meta { font-size: 0.62rem; letter-spacing: 0.09em; }
+  }
+
 /* COLD WAR ORIGINS: zone
    Checked against the identity register before designing. Vietnam holds cream
    paper and a serif on soft rounded cards. USA 1920s holds a near-black deco
@@ -320,66 +402,12 @@ body.alt .figure img { border-color: rgba(212,115,106,0.38) !important; filter: 
 body.alt .figure figcaption { border-top-color: var(--a1); }
 
 
-/* ---- DARK MODE: hardcoded body text -------------------------------------
-   The engine sets a literal dark grey on the key-terms definitions, the source
-   expander and the discussion body, so those blocks stay dark on a dark ground
-   and become unreadable when the toggle is switched. The chip labels have the
-   same problem. All of it is fixed here rather than in the engine. */
-body.alt .kt-def,
-body.alt .toggle-body,
-body.alt .disc-body,
-body.alt .cover-line { color: #D3D9DE !important; }
-body.alt .kt-term { border-color: rgba(231,235,238,0.22) !important; }
-body.alt .kt-term summary { color: var(--ink) !important; }
-body.alt .kt-label { border-top-color: rgba(231,235,238,0.22) !important; }
-body.alt .chip-argue, body.alt .chip-evidence, body.alt .chip-extract,
-body.alt .chip-interpret, body.alt .chip-weigh, body.alt .chip-evaluate,
-body.alt .chip-recall, body.alt .chip-understand, body.alt .chip-apply,
-body.alt .chip-instinct { color: #EDE4E2 !important; }
 
-
-/* ---- The sticky header at narrow widths ---------------------------------
-   .top-meta is a flex row with the unit eyebrow at one end and the step
-   counter at the other. Flex children default to min-width:auto, so at 360px
-   and below the eyebrow refuses to shrink and the counter lands on top of it.
-   Same construction as the level-score-bar bug. Desktop is untouched. */
-.top-meta { gap: 0.7rem !important; flex-wrap: nowrap !important; }
-.top-meta > * { min-width: 0 !important; }
-.top-meta #lesson-tag {
-  flex: 1 1 auto !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-}
-.top-meta .top-count { flex: 0 0 auto !important; white-space: nowrap !important; }
-@media (max-width: 380px) {
-  .top-meta { font-size: 0.62rem !important; letter-spacing: 0.09em !important; }
-}
-
-
-/* ---- Tap target: the mode toggle ----------------------------------------
-   The engine renders it at 38px tall, below the 44px minimum, and it is the
-   control a learner reaches for in the dark. Raised here rather than in the
-   engine so it can ship without an engine change. */
-.mode-toggle {
-  min-height: 44px !important;
-  padding-top: 0.62rem !important;
-  padding-bottom: 0.62rem !important;
-  font-size: 0.66rem !important;
-}
-@media (max-width: 520px) {
-  .mode-toggle {
-    min-height: 44px !important;
-    padding: 0.62rem 0.7rem !important;
-    font-size: 0.64rem !important;
-  }
-}
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     min-height: 100vh;
     background:
-      repeating-linear-gradient(90deg, rgba(27,42,51,0.028) 0 1px, transparent 1px 5px),
+      repeating-linear-gradient(90deg, rgba(var(--a1-rgb),0.05) 0 1px, transparent 1px 5px),
       radial-gradient(ellipse at top right, rgba(var(--a1-rgb),0.10) 0%, transparent 58%),
       radial-gradient(ellipse at bottom left, rgba(var(--a2-rgb),0.09) 0%, transparent 58%),
       var(--sand);
@@ -390,9 +418,16 @@ body.alt .chip-instinct { color: #EDE4E2 !important; }
   }
   .container { max-width: 720px; margin: 0 auto; }
   .top-bar { margin-bottom: 1.6rem; }
-  .top-meta { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--a2); font-weight: 700; margin-bottom: 0.55rem; gap: 1rem; flex-wrap: wrap; }
+  .top-meta { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--a2); font-weight: 700; margin-bottom: 0.55rem; gap: 0.7rem; flex-wrap: nowrap; }
+  /* Flex children default to min-width auto, so at 360px the eyebrow and the
+     step counter used to overlap. The eyebrow takes the free space and
+     truncates instead of pushing the counter off the row. */
+  .top-meta > * { min-width: 0; }
+  .top-meta #lesson-tag, .top-meta .top-label { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .top-meta .top-count { flex: 0 0 auto; white-space: nowrap; }
+  @media (max-width: 380px) { .top-meta { font-size: 0.62rem; letter-spacing: 0.09em; } }
   .top-count { color: var(--fade); font-weight: 500; letter-spacing: 0.04em; text-transform: none; }
-  .track { height: 3px; background: rgba(27,42,51,0.12); overflow: hidden; }
+  .track { height: 3px; background: var(--hair); overflow: hidden; }
   .fill { height: 100%; background: var(--a1); transition: width 0.35s ease; width: 0%; }
 
   /* Cover */
@@ -404,12 +439,12 @@ body.alt .chip-instinct { color: #EDE4E2 !important; }
       radial-gradient(circle at 9px 4.5px, var(--a1) 0 4px, transparent 4.5px),
       radial-gradient(circle at 46px 4.5px, var(--a1) 0 4px, transparent 4.5px),
       radial-gradient(circle at 83px 4.5px, var(--a1) 0 4px, transparent 4.5px); }
-  .cover-line { font-size: 1.16rem; line-height: 1.7; color: #4a463f; font-style: italic; max-width: 30rem; margin: 0 auto 2rem; min-height: 5.5rem; }
+  .cover-line { font-size: 1.16rem; line-height: 1.7; color: var(--muted); font-style: italic; max-width: 30rem; margin: 0 auto 2rem; min-height: 5.5rem; }
   .cover-line span { opacity: 0; transition: opacity 0.5s ease; }
   .cover-line span.vis { opacity: 1; }
   .cover-time { font-family: var(--sans); font-size: 0.8rem; color: var(--fade); margin-top: 1.4rem; letter-spacing: 0.02em; }
-  .btn-begin { font-family: var(--sans); display: inline-flex; align-items: center; gap: 0.8rem; padding: 1.05rem 2.2rem; background: var(--ink); color: #F4EADA; border: none; cursor: pointer; font-size: 1.12rem; font-weight: 700; }
-  .btn-begin:hover { background: #12202a; }
+  .btn-begin { font-family: var(--sans); display: inline-flex; align-items: center; gap: 0.8rem; padding: 1.05rem 2.2rem; background: var(--ink); color: var(--on-ink); border: none; cursor: pointer; font-size: 1.12rem; font-weight: 700; }
+  .btn-begin:hover { background: var(--ink-deep); }
   .btn-begin .sa { color: var(--a1); font-size: 1.3rem; }
   .skip-link { display: block; margin: 1.6rem auto 0; background: transparent; border: none; color: var(--fade); font-family: var(--sans); font-size: 0.84rem; cursor: pointer; text-decoration: underline; }
 
@@ -417,13 +452,13 @@ body.alt .chip-instinct { color: #EDE4E2 !important; }
   .story { padding: 0.6rem 0 0.4rem; min-height: 60vh; display: flex; flex-direction: column; justify-content: center; }
   .story-num { font-family: var(--serif); font-size: clamp(2.6rem,9vw,4rem); font-weight: 800; color: var(--a1); line-height: 1; letter-spacing: -0.02em; }
   .story-unit { font-family: var(--sans); font-size: 0.82rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fade); font-weight: 700; margin-top: 0.5rem; }
-  .story-rule { width: 100%; height: 1px; background: rgba(27,42,51,0.22); margin: 1.4rem 0 1.6rem; }
+  .story-rule { width: 100%; height: 1px; background: var(--hair-strong); margin: 1.4rem 0 1.6rem; }
   .story-line { font-size: 1.24rem; line-height: 1.66; margin-bottom: 1.05rem; opacity: 0; transform: translateY(6px); transition: opacity 0.55s ease, transform 0.55s ease; }
   .story-line.vis { opacity: 1; transform: translateY(0); }
   .story-line.last { color: var(--a2); font-style: italic; font-weight: 600; }
 
   /* Content cards */
-  .card { background: var(--paper); border: 1px solid rgba(27,42,51,0.12); border-left: 5px solid var(--a1); padding: 1.7rem 1.5rem; margin-bottom: 1.3rem; }
+  .card { background: var(--paper); border: 1px solid var(--hair); border-left: 5px solid var(--a1); padding: 1.7rem 1.5rem; margin-bottom: 1.3rem; }
   .stage-tag { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--clay); font-weight: 700; margin-bottom: 0.9rem; }
   .card h2 { font-family: var(--sans); font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 0.9rem; }
   .card p { font-size: 1.04rem; line-height: 1.74; margin-bottom: 0.9rem; }
@@ -432,7 +467,7 @@ body.alt .chip-instinct { color: #EDE4E2 !important; }
   .card strong { color: var(--a2); font-weight: 700; }
   .pull { border-left: 4px solid var(--a2); padding: 0.15rem 0 0.15rem 1rem; font-weight: 600; color: var(--ink); margin: 1.15rem 0; font-style: italic; }
   .figure { margin: 1rem 0 0.3rem; }
-  .figure img { display: block; height: auto; border: 1px solid rgba(27,42,51,0.18); margin: 0 auto; }
+  .figure img { display: block; height: auto; border: 1px solid var(--hair-strong); margin: 0 auto; }
   .figure.wide img { width: 100%; max-width: 460px; }
   .figure.portrait img { width: 100%; max-width: 320px; }
   .figure figcaption { font-family: var(--serif); font-size: 0.82rem; color: var(--fade); margin-top: 0.5rem; line-height: 1.55; text-align: center; }
@@ -440,82 +475,83 @@ body.alt .chip-instinct { color: #EDE4E2 !important; }
   /* Carousel */
   .car-wrap { margin: 0.4rem 0 0; }
   .car-prompt { font-family: var(--sans); font-size: 0.82rem; color: var(--a2); font-weight: 700; margin-bottom: 0.8rem; }
-  .car-frame { background: var(--cut); border: 1px solid rgba(27,42,51,0.14); border-top: 3px solid var(--a1); padding: 1.4rem 1.35rem; min-height: 8.5rem; display: flex; align-items: center; }
+  .car-frame { background: var(--cut); border: 1px solid var(--hair); border-top: 3px solid var(--a1); padding: 1.4rem 1.35rem; min-height: 8.5rem; display: flex; align-items: center; }
   .car-card { font-size: 1.06rem; line-height: 1.7; width: 100%; }
   .car-card .cc-lead { font-family: var(--sans); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--clay); display: block; margin-bottom: 0.5rem; }
   .car-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 0.9rem; gap: 1rem; }
   .car-dots { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-  .car-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(27,42,51,0.2); }
+  .car-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--hair-strong); }
   .car-dot.read { background: var(--a2); }
   .car-dot.here { outline: 2px solid var(--a1); outline-offset: 2px; }
   .car-count { font-family: var(--sans); font-size: 0.78rem; color: var(--fade); font-weight: 600; }
   .car-btns { display: flex; gap: 0.5rem; }
-  .car-btn { font-family: var(--sans); width: 2.4rem; height: 2.4rem; background: var(--paper); border: 1px solid rgba(27,42,51,0.28); color: var(--ink); font-size: 1.1rem; cursor: pointer; }
+  .car-btn { font-family: var(--sans); width: 2.4rem; height: 2.4rem; background: var(--paper); border: 1px solid var(--hair-strong); color: var(--ink); font-size: 1.1rem; cursor: pointer; }
   .car-btn:disabled { opacity: 0.32; cursor: not-allowed; }
 
   /* Stat strip */
   .stat-strip { display: grid; grid-template-columns: repeat(auto-fit,minmax(120px,1fr)); gap: 0.8rem; margin: 0.5rem 0 0.2rem; }
-  .stat { background: var(--cut); border: 1px solid rgba(27,42,51,0.12); border-top: 3px solid var(--a2); padding: 1.1rem 0.7rem; text-align: center; }
+  .stat { background: var(--cut); border: 1px solid var(--hair); border-top: 3px solid var(--a2); padding: 1.1rem 0.7rem; text-align: center; }
   .stat-num { font-family: var(--serif); font-size: 2rem; font-weight: 800; color: var(--a2); line-height: 1; letter-spacing: -0.02em; }
   .stat-label { font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--fade); margin-top: 0.5rem; line-height: 1.4; }
 
   /* Key terms + memory boxes (collapsed) */
   /* Key terms strip: label + individual expandable chips */
   .kt { margin-top: 1.3rem; }
-  .kt-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--a1); padding-top: 0.85rem; border-top: 1px dashed rgba(123,114,99,0.4); }
+  .kt-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--a1); padding-top: 0.85rem; border-top: 1px dashed var(--hair-strong); }
   .kt-row { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.85rem; }
-  .kt-term { border: 1px solid rgba(27,42,51,0.24); background: transparent; }
+  .kt-term { border: 1px solid var(--hair-strong); background: transparent; }
   .kt-term summary { font-family: var(--sans); font-size: 0.92rem; font-weight: 600; color: var(--ink); cursor: pointer; list-style: none; padding: 0.55rem 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; }
   .kt-term summary::-webkit-details-marker { display: none; }
   .kt-term summary::after { content: "+"; color: var(--a1); font-weight: 800; font-size: 1.05rem; }
   .kt-term[open] { display: block; width: 100%; }
   .kt-term[open] summary::after { content: "\2212"; }
-  .kt-def { font-size: 0.94rem; line-height: 1.62; color: #55504a; padding: 0 0.85rem 0.75rem; }
+  .kt-def { font-size: 0.94rem; line-height: 1.62; color: var(--muted); padding: 0 0.85rem 0.75rem; }
 
   /* Remember box (collapsed) */
-  .remember { margin-top: 0.9rem; border-top: 1px dashed rgba(123,114,99,0.4); padding-top: 0.7rem; }
+  .remember { margin-top: 0.9rem; border-top: 1px dashed var(--hair-strong); padding-top: 0.7rem; }
   .remember summary { font-family: var(--sans); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em; color: var(--a1); cursor: pointer; list-style: none; }
   .remember summary::-webkit-details-marker { display: none; }
   .remember summary::before { content: "+ "; font-weight: 800; }
   .remember[open] summary::before { content: "\2212 "; }
-  .remember .disc-body { font-size: 0.96rem; line-height: 1.68; color: #4a463f; margin-top: 0.6rem; background: rgba(var(--a2-rgb),0.06); border-left: 3px solid var(--a2); padding: 0.7rem 0.9rem; }
+  .remember .disc-body { font-size: 0.96rem; line-height: 1.68; color: var(--muted); margin-top: 0.6rem; background: rgba(var(--a2-rgb),0.06); border-left: 3px solid var(--a2); padding: 0.7rem 0.9rem; }
 
   /* Sources */
-  .source { position: relative; background: var(--cut); border: 1px solid rgba(27,42,51,0.12); border-top: 3px solid var(--a2); box-shadow: 6px 6px 0 rgba(var(--a2-rgb),0.13); padding: 1.2rem 1.3rem; margin: 1.15rem 0 1.6rem; }
+  .source { position: relative; background: var(--cut); border: 1px solid var(--hair); border-top: 3px solid var(--a2); box-shadow: 6px 6px 0 rgba(var(--a2-rgb),0.13); padding: 1.2rem 1.3rem; margin: 1.15rem 0 1.6rem; }
   .source-attr { font-family: var(--sans); font-size: 0.8rem; color: var(--clay); font-weight: 600; margin-bottom: 0.75rem; line-height: 1.5; }
   .source-body { font-size: 1.02rem; line-height: 1.74; }
   .source-body em { color: var(--a2); font-style: italic; }
   .toggle-btn { font-family: var(--sans); background: transparent; border: none; color: var(--a1); cursor: pointer; font-size: 0.88rem; font-weight: 600; text-decoration: underline; padding: 0.7rem 0 0; }
-  .toggle-body { display: none; margin-top: 0.7rem; padding-top: 0.7rem; border-top: 1px dashed rgba(123,114,99,0.45); font-size: 0.94rem; color: #55504a; line-height: 1.66; }
+  .toggle-body { display: none; margin-top: 0.7rem; padding-top: 0.7rem; border-top: 1px dashed var(--hair-strong); font-size: 0.94rem; color: var(--muted); line-height: 1.66; }
   .toggle-body.open { display: block; }
 
   /* Questions */
   .q-text { font-size: 1.16rem; line-height: 1.5; font-weight: 600; margin-bottom: 1.2rem; }
   .options { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.2rem; }
-  .option { display: flex; align-items: flex-start; gap: 0.85rem; padding: 1rem 1.05rem; background: var(--sand); border: 1px solid rgba(27,42,51,0.13); cursor: pointer; font-family: var(--serif); text-align: left; font-size: 0.99rem; line-height: 1.55; color: var(--ink); width: 100%; }
+  .option { display: flex; align-items: flex-start; gap: 0.85rem; padding: 1rem 1.05rem; background: var(--sand); border: 1px solid var(--hair); cursor: pointer; font-family: var(--serif); text-align: left; font-size: 0.99rem; line-height: 1.55; color: var(--ink); width: 100%; }
   .option:hover:not(:disabled) { background: var(--cut); border-color: var(--a1); }
   .option:disabled { cursor: default; }
   .option.selected { background: var(--cut); border-color: var(--a1); border-width: 2px; padding: 0.94rem 0.99rem; }
-  .option.correct { background: #E2EDE4; border-color: var(--a2); border-width: 2px; padding: 0.94rem 0.99rem; }
-  .option.wrong { background: #F2DDD3; border-color: var(--clay); border-width: 2px; padding: 0.94rem 0.99rem; }
+  .option.correct { background: var(--ok-bg); border-color: var(--a2); border-width: 2px; padding: 0.94rem 0.99rem; }
+  .option.wrong { background: var(--no-bg); border-color: var(--clay); border-width: 2px; padding: 0.94rem 0.99rem; }
   .option.dimmed { opacity: 0.46; }
+  body.alt .option.dimmed { opacity: 0.72; }
   .opt-letter { font-family: var(--serif); font-weight: 800; color: var(--a1); min-width: 1.1rem; }
   .opt-text { flex: 1; }
   .opt-mark { font-weight: 700; font-size: 1.1rem; }
-  .explanation { background: var(--cut); border: 1px solid rgba(27,42,51,0.12); border-left: 5px solid var(--a2); padding: 1.15rem 1.2rem; }
+  .explanation { background: var(--cut); border: 1px solid var(--hair); border-left: 5px solid var(--a2); padding: 1.15rem 1.2rem; }
   .expl-label { font-family: var(--sans); font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--a2); font-weight: 700; margin-bottom: 0.5rem; }
   .expl-text { line-height: 1.7; font-size: 0.96rem; }
   .chip { display: inline-block; font-family: var(--sans); padding: 0.22rem 0.65rem; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
-  .chip-argue { background: #E7D6C4; color: #7B3F1C; }
-  .chip-evidence { background: #E7D6C4; color: #7B3F1C; }
-  .chip-weigh { background: var(--a2); color: #F0E3CF; }
-  .chip-extract { background: #E7D6C4; color: #7B3F1C; }
-  .chip-interpret { background: #DCE3D4; color: #3F5A38; }
-  .chip-evaluate { background: var(--a2); color: #F0E3CF; }
-  .chip-instinct { background: #EADFC9; color: var(--clay); }
+  .chip-argue { background: var(--chip-a-bg); color: var(--chip-a-fg); }
+  .chip-evidence { background: var(--chip-a-bg); color: var(--chip-a-fg); }
+  .chip-weigh { background: var(--a2); color: var(--on-a2); }
+  .chip-extract { background: var(--chip-a-bg); color: var(--chip-a-fg); }
+  .chip-interpret { background: var(--chip-b-bg); color: var(--chip-b-fg); }
+  .chip-evaluate { background: var(--a2); color: var(--on-a2); }
+  .chip-instinct { background: var(--chip-c-bg); color: var(--clay); }
 
   /* Reopen the source from inside a question */
-  .srcpeek { border: 1px solid var(--clay); background: rgba(160,82,45,0.06); margin: 0 0 1rem; }
+  .srcpeek { border: 1px solid var(--clay); background: rgba(var(--a1-rgb),0.07); margin: 0 0 1rem; }
   .srcpeek summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 0.85rem; color: var(--clay); }
   .srcpeek summary::-webkit-details-marker { display: none; }
   .srcpeek .chev { flex: 0 0 auto; transition: transform 0.18s ease; }
@@ -533,17 +569,17 @@ body.alt .chip-instinct { color: #EDE4E2 !important; }
   /* order + sort interactions */
   .inter { margin: 0.4rem 0 1rem; }
   .inter-pool { display: flex; flex-direction: column; gap: 0.5rem; }
-  .inter-item { font-family: var(--serif); text-align: left; padding: 0.85rem 1rem; background: var(--sand); border: 1px solid rgba(27,42,51,0.16); cursor: pointer; font-size: 0.97rem; line-height: 1.5; color: var(--ink); display: flex; gap: 0.7rem; align-items: baseline; }
+  .inter-item { font-family: var(--serif); text-align: left; padding: 0.85rem 1rem; background: var(--sand); border: 1px solid var(--hair); cursor: pointer; font-size: 0.97rem; line-height: 1.5; color: var(--ink); display: flex; gap: 0.7rem; align-items: baseline; }
   .inter-item:hover:not(:disabled) { border-color: var(--a1); background: var(--cut); }
   .inter-item .rank { font-family: var(--sans); font-weight: 800; color: var(--a1); min-width: 1.4rem; }
   .inter-placed { background: var(--cut); border-color: var(--a2); }
-  .inter-item.ok { background: #E2EDE4; border-color: var(--a2); }
-  .inter-item.no { background: #F2DDD3; border-color: var(--clay); }
+  .inter-item.ok { background: var(--ok-bg); border-color: var(--a2); }
+  .inter-item.no { background: var(--no-bg); border-color: var(--clay); }
   .sort-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-  .sort-col { background: rgba(255,255,255,0.4); border: 1px dashed rgba(27,42,51,0.28); padding: 0.7rem; min-height: 4rem; }
+  .sort-col { background: var(--inset); border: 1px dashed var(--hair-strong); padding: 0.7rem; min-height: 4rem; }
   .sort-col h4 { font-family: var(--sans); font-size: 0.76rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--clay); font-weight: 700; margin-bottom: 0.6rem; text-align: center; }
   .sort-btns { display: flex; gap: 0.4rem; margin-top: 0.5rem; }
-  .sort-place { font-family: var(--sans); flex: 1; font-size: 0.78rem; font-weight: 700; padding: 0.4rem; background: var(--paper); border: 1px solid rgba(27,42,51,0.24); cursor: pointer; color: var(--ink); }
+  .sort-place { font-family: var(--sans); flex: 1; font-size: 0.78rem; font-weight: 700; padding: 0.4rem; background: var(--paper); border: 1px solid var(--hair-strong); cursor: pointer; color: var(--ink); }
 
   /* Running summary */
   .runsum { background: rgba(var(--a2-rgb),0.08); border: 1px solid rgba(var(--a2-rgb),0.28); border-left: 5px solid var(--a2); padding: 1.3rem 1.4rem; }
@@ -554,18 +590,18 @@ body.alt .chip-instinct { color: #EDE4E2 !important; }
   .runsum li.fresh { font-weight: 700; color: var(--a2); }
 
   /* Popup */
-  .pop-back { position: fixed; inset: 0; background: rgba(27,42,51,0.5); display: flex; align-items: center; justify-content: center; padding: 1.5rem; z-index: 50; }
+  .pop-back { position: fixed; inset: 0; background: var(--scrim); display: flex; align-items: center; justify-content: center; padding: 1.5rem; z-index: 50; }
   .pop { background: var(--paper); border-top: 5px solid var(--a2); padding: 1.6rem 1.5rem; max-width: 30rem; width: 100%; box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
   .pop-label { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--a2); font-weight: 700; margin-bottom: 0.8rem; }
   .pop-text { font-size: 1.1rem; line-height: 1.6; font-weight: 600; color: var(--ink); margin-bottom: 1.3rem; }
-  .pop-btn { font-family: var(--sans); width: 100%; padding: 0.9rem; background: var(--a2); border: none; color: #F7F1E4; font-size: 0.98rem; font-weight: 700; cursor: pointer; }
+  .pop-btn { font-family: var(--sans); width: 100%; padding: 0.9rem; background: var(--a2); border: none; color: var(--on-a2); font-size: 0.98rem; font-weight: 700; cursor: pointer; }
 
   /* Nav */
   .nav { display: flex; justify-content: space-between; gap: 0.8rem; margin-top: 1rem; }
-  .btn-secondary { font-family: var(--sans); padding: 0.8rem 1.2rem; background: transparent; border: 1px solid rgba(27,42,51,0.28); color: var(--ink); font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+  .btn-secondary { font-family: var(--sans); padding: 0.8rem 1.2rem; background: transparent; border: 1px solid var(--hair-strong); color: var(--ink); font-size: 0.9rem; font-weight: 600; cursor: pointer; }
   .btn-secondary:hover:not(:disabled) { background: var(--paper); }
-  .btn-primary { font-family: var(--sans); padding: 0.85rem 1.5rem; background: var(--a2); border: none; color: #F7F1E4; font-size: 0.95rem; cursor: pointer; font-weight: 700; }
-  .btn-primary:hover:not(:disabled) { background: #164C3F; }
+  .btn-primary { font-family: var(--sans); padding: 0.85rem 1.5rem; background: var(--a2); border: none; color: var(--on-a2); font-size: 0.95rem; cursor: pointer; font-weight: 700; }
+  .btn-primary:hover:not(:disabled) { background: var(--a2-deep); }
   .btn-primary:disabled { opacity: 0.34; cursor: not-allowed; }
 
   /* Results */
@@ -573,22 +609,23 @@ body.alt .chip-instinct { color: #EDE4E2 !important; }
   .results-eyebrow { font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--clay); font-weight: 700; margin-bottom: 0.8rem; }
   .results-title { font-family: var(--sans); font-size: clamp(1.9rem,5.5vw,2.7rem); font-weight: 800; letter-spacing: -0.02em; }
   .score-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(130px,1fr)); gap: 0.9rem; margin-bottom: 1.4rem; }
-  .score-block { background: var(--paper); border: 1px solid rgba(27,42,51,0.12); border-top: 4px solid var(--a1); padding: 1.3rem 0.8rem; text-align: center; }
+  .score-block { background: var(--paper); border: 1px solid var(--hair); border-top: 4px solid var(--a1); padding: 1.3rem 0.8rem; text-align: center; }
   .score-num { font-family: var(--serif); font-size: 2.6rem; font-weight: 800; color: var(--ink); line-height: 1; letter-spacing: -0.03em; }
   .score-den { font-family: var(--serif); font-size: 1.1rem; color: var(--fade); font-weight: 500; }
   .score-word { font-family: var(--serif); font-size: 1.3rem; font-weight: 800; color: var(--a2); line-height: 2; }
   .score-label { font-family: var(--sans); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fade); margin-top: 0.5rem; font-weight: 700; }
   .grade-desc { text-align: center; margin-bottom: 1.6rem; padding: 0 0.5rem; line-height: 1.66; }
-  .breakdown { background: var(--paper); border: 1px solid rgba(27,42,51,0.12); padding: 1.3rem; margin-bottom: 1.4rem; }
+  .breakdown { background: var(--paper); border: 1px solid var(--hair); padding: 1.3rem; margin-bottom: 1.4rem; }
   .breakdown-label { font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--a2); font-weight: 700; margin-bottom: 1rem; text-align: center; }
   .bd-row { display: grid; grid-template-columns: 1fr 110px 46px; gap: 0.7rem; align-items: center; margin-bottom: 0.7rem; font-family: var(--serif); font-size: 0.9rem; }
   .bd-name { font-weight: 600; }
-  .bd-bar { height: 9px; background: rgba(27,42,51,0.08); overflow: hidden; }
+  .bd-bar { height: 9px; background: var(--hair); overflow: hidden; }
   .bd-fill { height: 100%; background: var(--a2); }
   .bd-score { color: var(--fade); text-align: right; font-weight: 700; }
   .results-actions { display: flex; gap: 0.8rem; margin-top: 1.6rem; }
   .results-actions button { flex: 1; }
   .hidden { display: none !important; }
+
 </style>
 </head>
 <body>
@@ -644,12 +681,12 @@ const FLOW = [
   {
     "type": "content",
     "tag": "How this works",
-    "html": "<h2>This one is real</h2><p>Every question below is an actual NSC question from November 2023, Paper 1, Question 1, at its actual mark allocation. Your answers are checked against the official marking guidelines.</p><p>The allocation is printed on each question. A (2 x 2) wants two points, each worth two marks, so two sentences and not one.</p><p>Both sources are the real ones from the addendum. Nothing has been substituted, which is unusual: both are extracts from a United States government report, so they can be published outside an exam paper.</p>",
-    "remember": "Questions, allocations, sources and marking are all the real thing. Treat it as the exam, because it is.",
+    "html": "<h2>This one is real</h2><p>Every question below is an actual NSC question from November 2023, Paper 1, Question 1, at its actual mark allocation. Your answers are checked against the official DBE answers for that paper.</p><p>The allocation is printed on each question. A (2 x 2) wants two points, each worth two marks, so two sentences and not one.</p><p>Both sources are the real ones from the addendum. Nothing has been substituted, which is unusual: both are extracts from a United States government report, so they can be published outside an exam paper.</p>",
+    "remember": "Questions, allocations, sources and official answers are all the real thing. Treat it as the exam, because it is.",
     "terms": [
       {
         "term": "Marking guidelines",
-        "def": "The official DBE document telling markers what earns marks. Every answer here is checked against it."
+        "def": "The official DBE document setting out what a correct answer contains. You will see this name on any past paper you download. Every answer here is checked against it."
       }
     ]
   },
@@ -698,7 +735,7 @@ const FLOW = [
       "Bombing the roads and railways that lead into an enemy city"
     ],
     "correct": 0,
-    "explanation": "Two marks for a definition, so give the whole idea rather than a fragment. The memo accepts sealing a place off to stop goods or people entering or leaving. Option {opt2} is a trade embargo, which is close enough to tempt you and is not the same thing. A marker wants the movement stopped, not the trading.",
+    "explanation": "Two marks for a definition, so give the whole idea rather than a fragment. The memo accepts sealing a place off to stop goods or people entering or leaving. Option {opt2} is a trade embargo, which is close enough to tempt you and is not the same thing. The question asks what was stopped, and that was the movement, not the trading.",
     "noSource": true,
     "part": "Berlin could be sealed off because it lay inside the Soviet zone"
   },
@@ -714,7 +751,7 @@ const FLOW = [
       "The Western powers had already left Berlin, so the Soviet Union had no right to close it"
     ],
     "correct": 0,
-    "explanation": "Four marks means two developed points, so give the agreement and then what breaking it threatened. Berlin was to be run by four powers together, and one of them closed it alone. Option {opt3} contradicts the whole source, since this note is written by a government insisting it stays. Argue against your own source and a marker can award you nothing.",
+    "explanation": "Four marks means two developed points, so give the agreement and then what breaking it threatened. Berlin was to be run by four powers together, and one of them closed it alone. Option {opt3} contradicts the whole source, since this note is written by a government insisting it stays. Argue against your own source and your evidence is working against you.",
     "part": "The four-power agreement on Berlin was broken by one power acting alone"
   },
   {
@@ -729,7 +766,7 @@ const FLOW = [
       "Its formal representations, its offer to negotiate, and its request to restore traffic"
     ],
     "correct": 0,
-    "explanation": "Three marks means three separate quotations, so find three and stop hunting. Option {opt3} lists things the source certainly says. Every one of them is about what the United States did rather than why it stayed. Answer the question you were asked, because a marker gives nothing for quoting the wrong thing.",
+    "explanation": "Three marks means three separate quotations, so find three and stop hunting. Option {opt3} lists things the source certainly says. Every one of them is about what the United States did rather than why it stayed. Answer the question you were asked. An accurate quote of the wrong thing is still the wrong thing.",
     "part": "The American case rested on right, on agreement, and on the people in the city"
   },
   {
@@ -744,7 +781,7 @@ const FLOW = [
       "That the new Western currency should be accepted throughout the whole of Berlin"
     ],
     "correct": 0,
-    "explanation": "One mark, so one quotation, and it is the sentence about restoring traffic. Option {opt1} is the reverse of the source. Feeding West Berlin from the Soviet sector was the Soviet offer, and taking it meant giving up the city. A marker sees that as answering with the other side's position, and you lose your mark.",
+    "explanation": "One mark, so one quotation, and it is the sentence about restoring traffic. Option {opt1} is the reverse of the source. Feeding West Berlin from the Soviet sector was the Soviet offer, and taking it meant giving up the city. That answers with the other side's position, not the one you were asked about.",
     "part": "The Americans demanded the routes be reopened, not that Moscow feed the city"
   },
   {
@@ -759,7 +796,7 @@ const FLOW = [
       "It was the only way to keep France and Britain inside the Western alliance"
     ],
     "correct": 0,
-    "explanation": "Four marks, so two developed points. Offering to talk while refusing to leave costs nothing. It also leaves the other side holding the blockade in front of the world. Add that neither side wanted a shooting war and you have both points. Option {opt1} reads the offer as weakness, and a marker sees the opposite argument in the same paragraph.",
+    "explanation": "Four marks, so two developed points. Offering to talk while refusing to leave costs nothing. It also leaves the other side holding the blockade in front of the world. Add that neither side wanted a shooting war and you have both points. Option {opt1} reads the offer as weakness. The opposite argument is in the same paragraph.",
     "part": "Offering to negotiate while refusing to leave put the blame on Moscow"
   },
   {
@@ -796,7 +833,7 @@ const FLOW = [
       "The four-power agreements did not allow a currency change without Soviet consent"
     ],
     "correct": 0,
-    "explanation": "Two marks means two quotations, and both sit in the first two paragraphs. Option {opt3} sounds exactly like the kind of thing this note would say, which is why it tempts you. The Soviet reply never mentions the agreements at all. Quote what is on the page rather than what you expect, or a marker cannot credit it.",
+    "explanation": "Two marks means two quotations, and both sit in the first two paragraphs. Option {opt3} sounds exactly like the kind of thing this note would say, which is why it tempts you. The Soviet reply never mentions the agreements at all. Quote what is on the page rather than what you expect to find there.",
     "part": "Moscow argued from geography and from the currency, not from the agreements"
   },
   {
@@ -811,7 +848,7 @@ const FLOW = [
       "Removing all paper money from Germany and returning the country to barter"
     ],
     "correct": 0,
-    "explanation": "Two marks, so name the change and say who it left out. The new currency went into the three western zones and West Berlin, and not into the Soviet zone. Option {opt1} describes what the Soviet note feared rather than what actually happened. A marker reads that as confusing the reform with its consequence, and you lose the mark.",
+    "explanation": "Two marks, so name the change and say who it left out. The new currency went into the three western zones and West Berlin, and not into the Soviet zone. Option {opt1} describes what the Soviet note feared rather than what actually happened. Answer with that and you have given the consequence of the reform instead of the reform.",
     "part": "A new currency in the West alone is what turned the dispute into a crisis"
   },
   {
@@ -822,7 +859,7 @@ const FLOW = [
     "terms": [
       {
         "term": "Own knowledge",
-        "def": "Relevant fact you bring yourself, which is not in the sources. Required for full marks on the paragraph."
+        "def": "Relevant fact you bring yourself, which is not in the sources. The paragraph question is not finished without it."
       }
     ]
   },
@@ -830,14 +867,14 @@ const FLOW = [
     "type": "question",
     "level": "Evaluate",
     "marks": "Topic sentence",
-    "q": "Which opening sentence would earn the marks?",
+    "q": "Which opening sentence does what the question asks?",
     "options": [
       "Berlin became the flashpoint because both sides claimed a right to be there",
       "Berlin was divided into four sectors in 1945 and lay inside the Soviet zone",
       "The Berlin blockade was one of the most dramatic events of the entire Cold War"
     ],
     "correct": 0,
-    "explanation": "A topic sentence answers the question in one line, and this question asked how Berlin became the focal point. Option {opt1} starts the background instead. That is the commonest way this paragraph goes wrong, and a marker reads it as narrative. Option {opt2} praises the event without giving you anything to develop.",
+    "explanation": "A topic sentence answers the question in one line, and this question asked how Berlin became the focal point. Option {opt1} starts the background instead. That is the commonest way this paragraph goes wrong: it tells the story and never says what the story did. Option {opt2} praises the event without giving you anything to develop.",
     "noSource": true
   },
   {
@@ -852,7 +889,7 @@ const FLOW = [
       "A separate monetary reform was carried out in the western zones of Germany"
     ],
     "correct": 0,
-    "explanation": "Own knowledge means a relevant fact the sources do not contain. The airlift is the obvious one, because neither note mentions it. The other three are printed in front of you, which is exactly why they feel safe to write. Repeat a source and call it your own knowledge and a marker gains you nothing.",
+    "explanation": "Own knowledge means a relevant fact the sources do not contain. The airlift is the obvious one, because neither note mentions it. The other three are printed in front of you, which is exactly why they feel safe to write. Repeat a source and call it your own knowledge and you have added nothing to it.",
     "noSource": true
   },
   {
@@ -873,7 +910,7 @@ const FLOW = [
       2,
       3
     ],
-    "explanation": "Topic sentence, source evidence, own knowledge, conclusion. That order matters because a marker reads for structure as well as content in this question. Put your own knowledge first and the paragraph reads as an essay that has ignored the sources. Leave the closing sentence off, which is the commonest omission of all, and you cap yourself below the top band.",
+    "explanation": "Topic sentence, source evidence, own knowledge, conclusion. That order matters, because this question is asking for a shape as well as a set of facts. Put your own knowledge first and the paragraph reads as an essay that has ignored the sources. Leave the closing sentence off, which is the commonest omission of all, and you cap yourself below the top band.",
     "noSource": true
   },
   {
@@ -953,7 +990,7 @@ const FLOW = [
   {
     "type": "content",
     "tag": "What this run leaves out",
-    "html": "<h2>Being straight with you about this run</h2><p>The real Question 1 is fifty marks and this run is twenty-six. You should know what was cut and why.</p><p>Two of the four sources in the addendum could not be published: an extract from a book about the Berlin Wall, and a newspaper cartoon from the Kansas City Star. Both are still in copyright, and the exam exemption that lets a paper reproduce them does not reach a product like this one. The questions attached to them went with them.</p><p>The comparison question and the limitations question were also cut, because the paragraph question is the only Level 3 item a run this size can carry. Your comparison practice is in Lesson 2 and your usefulness and reliability practice is in Lesson 3.</p><p>Everything that remains is real: the questions, the sources, the allocations and the marking. Nothing here was invented to fill a gap.</p>"
+    "html": "<h2>Being straight with you about this run</h2><p>The real Question 1 is fifty marks and this run is twenty-six. You should know what was cut and why.</p><p>Two of the four sources in the addendum could not be published: an extract from a book about the Berlin Wall, and a newspaper cartoon from the Kansas City Star. Both are still in copyright, and the exam exemption that lets a paper reproduce them does not reach a product like this one. The questions attached to them went with them.</p><p>The comparison question and the limitations question were also cut, because the paragraph question is the only evaluation item a run this size can carry. Your comparison practice is in Lesson 2 and your usefulness and reliability practice is in Lesson 3.</p><p>Everything that remains is real: the questions, the sources, the allocations and the official answers. Nothing here was invented to fill a gap.</p>"
   },
   {
     "type": "content",
@@ -962,7 +999,6 @@ const FLOW = [
   }
 ];
 
-// ---- identity of the five skill/tier labels ----
 const CHIP = {
   Argue:{cls:"chip-argue"}, Evidence:{cls:"chip-evidence"}, Weigh:{cls:"chip-weigh"},
   Extract:{cls:"chip-extract"}, Interpret:{cls:"chip-interpret"}, Evaluate:{cls:"chip-evaluate"},
@@ -1491,6 +1527,7 @@ renderCover();
     paint();
   });
   paint();
+
 })();
 </script>
 </body>
