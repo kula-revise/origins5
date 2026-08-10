@@ -6,131 +6,49 @@
 <title>Putting It Together | The Cold War: The Origins of the Cold War in Europe | Kula Revise</title>
 <style>
   /* ============================================================
-     KULA SOURCE ENGINE v3: TOKEN CONTRACT
-     This file is fixed mechanism. Do not edit it per series.
-     A skin sets the THIRTEEN identity variables in the block below
-     and nothing else is required of it.
-
+     IDENTITY BLOCK. This is the ONLY block you edit per series.
+     Everything below the block is the fixed mechanism and never changes.
      Two accents, split by job:
        --a1  accent one: navigation, progress, emphasis, option letters,
              the primary button, the story date. The "structure" accent.
-       --a2  accent two: anything the learner earned. Correct answers,
+       --a2  accent two: anything the learner earned. correct answers,
              the running summary, breakdown bars, key facts, the last
              story line. The "reward" accent.
-     Set --a1-rgb / --a2-rgb to the SAME colours as r,g,b (no #), because
-     the tints, washes and shadows are built from them.
+     Set --a1-rgb / --a2-rgb to the SAME colours as r,g,b (no #), so the
+     tints and shadows track the accents. One face for facts (serif),
+     one for structure (sans). See README for how to design a new skin.
      ============================================================ */
-
   :root {
-    /* ---- THE IDENTITY CONTRACT. A skin overrides these thirteen. ---- */
-    --sand:  #F2E9D9;   /* page background */
-    --paper: #FBF6EB;   /* cards */
-    --cut:   #FFFCF4;   /* insets, sources, carousels */
-    --ink:   #1B2A33;   /* body text */
-    --clay:  #8C4A2F;   /* stage tags, quiet labels */
-    --fade:  #7B7263;   /* muted text, captions */
-    --a1: #B4622D;   --a1-rgb: 180,98,45;
-    --a2: #1F6B58;   --a2-rgb: 31,107,88;
+    /* grounds and ink */
+    --sand: #F2E9D9;   /* page background */
+    --paper: #FBF6EB;  /* cards */
+    --cut: #FFFCF4;    /* insets, sources, carousels */
+    --ink: #1B2A33;    /* body text */
+    --clay: #8C4A2F;   /* stage tags, quiet labels */
+    --fade: #7B7263;   /* muted text, captions */
+    /* the two accents */
+    --a1: #B4622D;   --a1-rgb: 180,98,45;    /* accent one */
+    --a2: #1F6B58;   --a2-rgb: 31,107,88;    /* accent two */
+    /* type: one face for facts, one for structure */
     --serif: Georgia, 'Times New Roman', serif;
     --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    --mono: ui-monospace, 'Cascadia Code', Consolas, 'Courier New', monospace;
-
-    /* ---- DERIVED TOKENS. A skin should not need to touch these. ----
-       They exist because the engine used to hardcode fourteen literal
-       colours, which is what made every glossary definition and every
-       source expander invisible in dark mode. Everything below now
-       tracks the identity variables above, so a skin that sets --fade
-       and --ink correctly gets a readable dark mode for free. ---- */
-    --muted:      var(--fade);          /* secondary body text: kt-def, toggle-body, disc-body, cover-line */
-    --hair:       rgba(0,0,0,0.12);     /* progress track, quiet rules */
-    --hair-strong:rgba(0,0,0,0.28);     /* dashed divider inside an expander */
-    --on-ink:     var(--paper);         /* text sitting on an --ink ground */
-    --on-a1:      var(--paper);         /* text sitting on an --a1 ground */
-    --on-a2:      var(--paper);         /* text sitting on an --a2 ground */
-    --ink-deep:   #12202a;              /* --ink one step darker, button hover */
-    --a2-deep:    #164C3F;              /* --a2 one step darker, button hover */
-    --ok-bg:      rgba(var(--a2-rgb),0.13);  /* a correct option, a placed item */
-    --no-bg:      rgba(140,74,47,0.13);      /* a wrong option, a misplaced item */
-    /* Skill chips. a = the entry-level skill (Extract, Argue, Evidence, Recall).
-       b = the middle skill (Interpret, Understand). c = unassessed instinct.
-       The top skill (Evaluate, Weigh, Apply) sits on a solid accent ground. */
-    --chip-a-bg: rgba(var(--a1-rgb),0.16);  --chip-a-fg: var(--a1);
-    --chip-b-bg: rgba(var(--a2-rgb),0.16);  --chip-b-fg: var(--a2);
-    --chip-c-bg: rgba(0,0,0,0.06);
-    --scrim:  rgba(27,42,51,0.5);       /* modal backdrop */
-    --inset:  rgba(255,255,255,0.4);    /* sort column well */
-
-    /* Legacy aliases. Older skins and the quiz shell reference these. */
-    --copper: var(--a1);
-    --malachite: var(--a2);
   }
 
-  /* ---- DARK MODE TOKEN RE-POINT ---------------------------------------
-     The skin supplies body.alt values for the thirteen identity variables.
-     Everything derived re-points here, once, for every unit. This is the
-     engine-level fix for the three defects logged in MOBILE_FIXES_HANDOVER:
-     a skin no longer needs the patch block at all.
-     ------------------------------------------------------------------- */
-  body.alt {
-    --muted:      var(--fade);
-    --hair:       rgba(255,255,255,0.14);
-    --hair-strong:rgba(255,255,255,0.26);
-    --on-ink:     var(--sand);
-    --on-a1:      var(--sand);
-    --on-a2:      var(--sand);
-    --ink-deep:   var(--ink);
-    --a2-deep:    var(--a2);
-    --ok-bg:      rgba(var(--a2-rgb),0.20);
-    --no-bg:      rgba(var(--a1-rgb),0.18);
-    --chip-a-bg:  rgba(var(--a1-rgb),0.22);  --chip-a-fg: var(--ink);
-    --chip-b-bg:  rgba(var(--a2-rgb),0.22);  --chip-b-fg: var(--ink);
-    --chip-c-bg:  rgba(255,255,255,0.10);
-    --scrim:  rgba(0,0,0,0.62);
-    --inset:  rgba(255,255,255,0.05);
-  }
-  /* Key term chips keep a visible edge once the ground inverts. */
-  body.alt .kt-term { border-color: var(--hair-strong); }
-  body.alt .kt-term summary { color: var(--ink); }
-  body.alt .kt-label { border-top-color: var(--hair-strong); }
-  /* v2 dimmed the options a learner did not pick; at 0.45 they vanish on a dark ground. */
-  body.alt .option.dimmed, body.alt .option-btn.dimmed { opacity: 0.72; }
-
-  /* ---- MODE TOGGLE. Fixed bottom right, 44px minimum tap target. ---- */
+  /* Mode toggle, fixed bottom right. The skin supplies body.alt. */
   .mode-toggle {
     position: fixed; bottom: 0.9rem; right: 0.9rem; z-index: 40;
     display: flex; align-items: center; gap: 0.4rem;
     font-family: var(--sans); font-size: 0.66rem; font-weight: 700;
     letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 0.62rem 0.75rem; min-height: 44px;
+    padding: 0.55rem 0.75rem; min-height: 2.4rem;
     background: var(--paper); color: var(--fade);
-    border: 1px solid var(--hair-strong); cursor: pointer;
-    box-shadow: 0 2px 12px var(--scrim);
+    border: 1px solid rgba(0,0,0,0.18); cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.16);
   }
   .mode-toggle:hover { color: var(--ink); border-color: var(--a1); }
   .mode-toggle:focus-visible { outline: 2px solid var(--a1); outline-offset: 2px; }
   .mode-toggle svg { width: 0.9rem; height: 0.9rem; fill: none; stroke: currentColor; stroke-width: 1.6; }
-  @media (max-width: 520px) {
-    .mode-toggle { min-height: 44px; padding: 0.62rem 0.7rem; font-size: 0.64rem; }
-  }
   @media print { .mode-toggle { display: none; } }
-
-  /* ---- STICKY HEADER AT 360px --------------------------------------
-     .top-meta is a flex row and flex children default to min-width auto,
-     so at 360px the eyebrow and the step counter used to overlap. The
-     eyebrow now takes the free space and truncates rather than pushing
-     the counter off. Renders correctly at 375px and above either way,
-     which is why this was missed. 360 is common on mid-range Android.
-     ----------------------------------------------------------------- */
-  .top-meta { gap: 0.7rem; flex-wrap: nowrap; }
-  .top-meta > * { min-width: 0; }
-  .top-meta #lesson-tag, .top-meta .top-label {
-    flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .top-meta .top-count { flex: 0 0 auto; white-space: nowrap; }
-  @media (max-width: 380px) {
-    .top-meta { font-size: 0.62rem; letter-spacing: 0.09em; }
-  }
-
 /* COLD WAR ORIGINS: zone
    Checked against the identity register before designing. Vietnam holds cream
    paper and a serif on soft rounded cards. USA 1920s holds a near-black deco
@@ -169,9 +87,9 @@
   /* border red for structure, steel blue for reward */
   --a1: #A32B23;  --a1-rgb: 163,43,35;
   --a2: #2E5F8A;  --a2-rgb: 46,95,138;
-  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --serif: Georgia, 'Times New Roman', serif;
-  --mono: ui-monospace, 'Cascadia Code', Consolas, 'Courier New', monospace;
+  --sans:  'Archivo Narrow', 'Archivo', 'Inter', system-ui, -apple-system, Arial, sans-serif;
+  --serif: 'Source Serif 4', 'Charter', Georgia, serif;
+  --mono:  var(--sans);
 }
 
 /* Ground: the diagonal hatch of a disputed zone on a period map. */
@@ -352,6 +270,8 @@ body.alt .option.wrong, body.alt .option-btn.wrong {
   border-color: #D4736A !important;
   color: var(--ink) !important;
 }
+body.alt .inter-item.ok { background: rgba(107,163,214,0.20) !important; border-color: #6BA3D6 !important; color: var(--ink) !important; }
+body.alt .inter-item.no { background: rgba(212,115,106,0.18) !important; border-color: #D4736A !important; color: var(--ink) !important; }
 body.alt .option.correct .opt-text, body.alt .option-btn.correct .opt-text,
 body.alt .option.wrong   .opt-text, body.alt .option-btn.wrong   .opt-text { color: var(--ink) !important; }
 body.alt .option.correct .opt-letter, body.alt .option-btn.correct .opt-letter { color: #8FBEE4 !important; }
@@ -402,12 +322,28 @@ body.alt .figure img { border-color: rgba(212,115,106,0.38) !important; filter: 
 body.alt .figure figcaption { border-top-color: var(--a1); }
 
 
+/* ---- DARK MODE: hardcoded body text -------------------------------------
+   The engine sets a literal dark grey on the key-terms definitions, the source
+   expander and the discussion body, so those blocks stay dark on a dark ground
+   and become unreadable when the toggle is switched. The chip labels have the
+   same problem. All of it is fixed here rather than in the engine. */
+body.alt .kt-def,
+body.alt .toggle-body,
+body.alt .disc-body,
+body.alt .cover-line { color: #D3D9DE !important; }
+body.alt .kt-term { border-color: rgba(231,235,238,0.22) !important; }
+body.alt .kt-term summary { color: var(--ink) !important; }
+body.alt .kt-label { border-top-color: rgba(231,235,238,0.22) !important; }
+body.alt .chip-argue, body.alt .chip-evidence, body.alt .chip-extract,
+body.alt .chip-interpret, body.alt .chip-weigh, body.alt .chip-evaluate,
+body.alt .chip-recall, body.alt .chip-understand, body.alt .chip-apply,
+body.alt .chip-instinct { color: #EDE4E2 !important; }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     min-height: 100vh;
     background:
-      repeating-linear-gradient(90deg, rgba(var(--a1-rgb),0.05) 0 1px, transparent 1px 5px),
+      repeating-linear-gradient(90deg, rgba(27,42,51,0.028) 0 1px, transparent 1px 5px),
       radial-gradient(ellipse at top right, rgba(var(--a1-rgb),0.10) 0%, transparent 58%),
       radial-gradient(ellipse at bottom left, rgba(var(--a2-rgb),0.09) 0%, transparent 58%),
       var(--sand);
@@ -418,16 +354,9 @@ body.alt .figure figcaption { border-top-color: var(--a1); }
   }
   .container { max-width: 720px; margin: 0 auto; }
   .top-bar { margin-bottom: 1.6rem; }
-  .top-meta { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--a2); font-weight: 700; margin-bottom: 0.55rem; gap: 0.7rem; flex-wrap: nowrap; }
-  /* Flex children default to min-width auto, so at 360px the eyebrow and the
-     step counter used to overlap. The eyebrow takes the free space and
-     truncates instead of pushing the counter off the row. */
-  .top-meta > * { min-width: 0; }
-  .top-meta #lesson-tag, .top-meta .top-label { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .top-meta .top-count { flex: 0 0 auto; white-space: nowrap; }
-  @media (max-width: 380px) { .top-meta { font-size: 0.62rem; letter-spacing: 0.09em; } }
+  .top-meta { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--a2); font-weight: 700; margin-bottom: 0.55rem; gap: 1rem; flex-wrap: wrap; }
   .top-count { color: var(--fade); font-weight: 500; letter-spacing: 0.04em; text-transform: none; }
-  .track { height: 3px; background: var(--hair); overflow: hidden; }
+  .track { height: 3px; background: rgba(27,42,51,0.12); overflow: hidden; }
   .fill { height: 100%; background: var(--a1); transition: width 0.35s ease; width: 0%; }
 
   /* Cover */
@@ -439,12 +368,12 @@ body.alt .figure figcaption { border-top-color: var(--a1); }
       radial-gradient(circle at 9px 4.5px, var(--a1) 0 4px, transparent 4.5px),
       radial-gradient(circle at 46px 4.5px, var(--a1) 0 4px, transparent 4.5px),
       radial-gradient(circle at 83px 4.5px, var(--a1) 0 4px, transparent 4.5px); }
-  .cover-line { font-size: 1.16rem; line-height: 1.7; color: var(--muted); font-style: italic; max-width: 30rem; margin: 0 auto 2rem; min-height: 5.5rem; }
+  .cover-line { font-size: 1.16rem; line-height: 1.7; color: var(--ink); font-style: italic; max-width: 30rem; margin: 0 auto 2rem; min-height: 5.5rem; }
   .cover-line span { opacity: 0; transition: opacity 0.5s ease; }
   .cover-line span.vis { opacity: 1; }
   .cover-time { font-family: var(--sans); font-size: 0.8rem; color: var(--fade); margin-top: 1.4rem; letter-spacing: 0.02em; }
-  .btn-begin { font-family: var(--sans); display: inline-flex; align-items: center; gap: 0.8rem; padding: 1.05rem 2.2rem; background: var(--ink); color: var(--on-ink); border: none; cursor: pointer; font-size: 1.12rem; font-weight: 700; }
-  .btn-begin:hover { background: var(--ink-deep); }
+  .btn-begin { font-family: var(--sans); display: inline-flex; align-items: center; gap: 0.8rem; padding: 1.05rem 2.2rem; background: var(--ink); color: #F4EADA; border: none; cursor: pointer; font-size: 1.12rem; font-weight: 700; }
+  .btn-begin:hover { background: #12202a; }
   .btn-begin .sa { color: var(--a1); font-size: 1.3rem; }
   .skip-link { display: block; margin: 1.6rem auto 0; background: transparent; border: none; color: var(--fade); font-family: var(--sans); font-size: 0.84rem; cursor: pointer; text-decoration: underline; }
 
@@ -452,13 +381,13 @@ body.alt .figure figcaption { border-top-color: var(--a1); }
   .story { padding: 0.6rem 0 0.4rem; min-height: 60vh; display: flex; flex-direction: column; justify-content: center; }
   .story-num { font-family: var(--serif); font-size: clamp(2.6rem,9vw,4rem); font-weight: 800; color: var(--a1); line-height: 1; letter-spacing: -0.02em; }
   .story-unit { font-family: var(--sans); font-size: 0.82rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fade); font-weight: 700; margin-top: 0.5rem; }
-  .story-rule { width: 100%; height: 1px; background: var(--hair-strong); margin: 1.4rem 0 1.6rem; }
+  .story-rule { width: 100%; height: 1px; background: rgba(27,42,51,0.22); margin: 1.4rem 0 1.6rem; }
   .story-line { font-size: 1.24rem; line-height: 1.66; margin-bottom: 1.05rem; opacity: 0; transform: translateY(6px); transition: opacity 0.55s ease, transform 0.55s ease; }
   .story-line.vis { opacity: 1; transform: translateY(0); }
   .story-line.last { color: var(--a2); font-style: italic; font-weight: 600; }
 
   /* Content cards */
-  .card { background: var(--paper); border: 1px solid var(--hair); border-left: 5px solid var(--a1); padding: 1.7rem 1.5rem; margin-bottom: 1.3rem; }
+  .card { background: var(--paper); border: 1px solid rgba(27,42,51,0.12); border-left: 5px solid var(--a1); padding: 1.7rem 1.5rem; margin-bottom: 1.3rem; }
   .stage-tag { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--clay); font-weight: 700; margin-bottom: 0.9rem; }
   .card h2 { font-family: var(--sans); font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 0.9rem; }
   .card p { font-size: 1.04rem; line-height: 1.74; margin-bottom: 0.9rem; }
@@ -467,7 +396,7 @@ body.alt .figure figcaption { border-top-color: var(--a1); }
   .card strong { color: var(--a2); font-weight: 700; }
   .pull { border-left: 4px solid var(--a2); padding: 0.15rem 0 0.15rem 1rem; font-weight: 600; color: var(--ink); margin: 1.15rem 0; font-style: italic; }
   .figure { margin: 1rem 0 0.3rem; }
-  .figure img { display: block; height: auto; border: 1px solid var(--hair-strong); margin: 0 auto; }
+  .figure img { display: block; height: auto; border: 1px solid rgba(27,42,51,0.18); margin: 0 auto; }
   .figure.wide img { width: 100%; max-width: 460px; }
   .figure.portrait img { width: 100%; max-width: 320px; }
   .figure figcaption { font-family: var(--serif); font-size: 0.82rem; color: var(--fade); margin-top: 0.5rem; line-height: 1.55; text-align: center; }
@@ -475,83 +404,82 @@ body.alt .figure figcaption { border-top-color: var(--a1); }
   /* Carousel */
   .car-wrap { margin: 0.4rem 0 0; }
   .car-prompt { font-family: var(--sans); font-size: 0.82rem; color: var(--a2); font-weight: 700; margin-bottom: 0.8rem; }
-  .car-frame { background: var(--cut); border: 1px solid var(--hair); border-top: 3px solid var(--a1); padding: 1.4rem 1.35rem; min-height: 8.5rem; display: flex; align-items: center; }
+  .car-frame { background: var(--cut); border: 1px solid rgba(27,42,51,0.14); border-top: 3px solid var(--a1); padding: 1.4rem 1.35rem; min-height: 8.5rem; display: flex; align-items: center; }
   .car-card { font-size: 1.06rem; line-height: 1.7; width: 100%; }
   .car-card .cc-lead { font-family: var(--sans); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--clay); display: block; margin-bottom: 0.5rem; }
   .car-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 0.9rem; gap: 1rem; }
   .car-dots { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-  .car-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--hair-strong); }
+  .car-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(27,42,51,0.2); }
   .car-dot.read { background: var(--a2); }
   .car-dot.here { outline: 2px solid var(--a1); outline-offset: 2px; }
   .car-count { font-family: var(--sans); font-size: 0.78rem; color: var(--fade); font-weight: 600; }
   .car-btns { display: flex; gap: 0.5rem; }
-  .car-btn { font-family: var(--sans); width: 2.4rem; height: 2.4rem; background: var(--paper); border: 1px solid var(--hair-strong); color: var(--ink); font-size: 1.1rem; cursor: pointer; }
+  .car-btn { font-family: var(--sans); width: 2.4rem; height: 2.4rem; background: var(--paper); border: 1px solid rgba(27,42,51,0.28); color: var(--ink); font-size: 1.1rem; cursor: pointer; }
   .car-btn:disabled { opacity: 0.32; cursor: not-allowed; }
 
   /* Stat strip */
   .stat-strip { display: grid; grid-template-columns: repeat(auto-fit,minmax(120px,1fr)); gap: 0.8rem; margin: 0.5rem 0 0.2rem; }
-  .stat { background: var(--cut); border: 1px solid var(--hair); border-top: 3px solid var(--a2); padding: 1.1rem 0.7rem; text-align: center; }
+  .stat { background: var(--cut); border: 1px solid rgba(27,42,51,0.12); border-top: 3px solid var(--a2); padding: 1.1rem 0.7rem; text-align: center; }
   .stat-num { font-family: var(--serif); font-size: 2rem; font-weight: 800; color: var(--a2); line-height: 1; letter-spacing: -0.02em; }
   .stat-label { font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--fade); margin-top: 0.5rem; line-height: 1.4; }
 
   /* Key terms + memory boxes (collapsed) */
   /* Key terms strip: label + individual expandable chips */
   .kt { margin-top: 1.3rem; }
-  .kt-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--a1); padding-top: 0.85rem; border-top: 1px dashed var(--hair-strong); }
+  .kt-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--a1); padding-top: 0.85rem; border-top: 1px dashed rgba(123,114,99,0.4); }
   .kt-row { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.85rem; }
-  .kt-term { border: 1px solid var(--hair-strong); background: transparent; }
+  .kt-term { border: 1px solid rgba(27,42,51,0.24); background: transparent; }
   .kt-term summary { font-family: var(--sans); font-size: 0.92rem; font-weight: 600; color: var(--ink); cursor: pointer; list-style: none; padding: 0.55rem 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; }
   .kt-term summary::-webkit-details-marker { display: none; }
   .kt-term summary::after { content: "+"; color: var(--a1); font-weight: 800; font-size: 1.05rem; }
   .kt-term[open] { display: block; width: 100%; }
   .kt-term[open] summary::after { content: "\2212"; }
-  .kt-def { font-size: 0.94rem; line-height: 1.62; color: var(--muted); padding: 0 0.85rem 0.75rem; }
+  .kt-def { font-size: 0.94rem; line-height: 1.62; color: #55504a; padding: 0 0.85rem 0.75rem; }
 
   /* Remember box (collapsed) */
-  .remember { margin-top: 0.9rem; border-top: 1px dashed var(--hair-strong); padding-top: 0.7rem; }
+  .remember { margin-top: 0.9rem; border-top: 1px dashed rgba(123,114,99,0.4); padding-top: 0.7rem; }
   .remember summary { font-family: var(--sans); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em; color: var(--a1); cursor: pointer; list-style: none; }
   .remember summary::-webkit-details-marker { display: none; }
   .remember summary::before { content: "+ "; font-weight: 800; }
   .remember[open] summary::before { content: "\2212 "; }
-  .remember .disc-body { font-size: 0.96rem; line-height: 1.68; color: var(--muted); margin-top: 0.6rem; background: rgba(var(--a2-rgb),0.06); border-left: 3px solid var(--a2); padding: 0.7rem 0.9rem; }
+  .remember .disc-body { font-size: 0.96rem; line-height: 1.68; color: var(--ink); margin-top: 0.6rem; background: rgba(var(--a2-rgb),0.06); border-left: 3px solid var(--a2); padding: 0.7rem 0.9rem; }
 
   /* Sources */
-  .source { position: relative; background: var(--cut); border: 1px solid var(--hair); border-top: 3px solid var(--a2); box-shadow: 6px 6px 0 rgba(var(--a2-rgb),0.13); padding: 1.2rem 1.3rem; margin: 1.15rem 0 1.6rem; }
+  .source { position: relative; background: var(--cut); border: 1px solid rgba(27,42,51,0.12); border-top: 3px solid var(--a2); box-shadow: 6px 6px 0 rgba(var(--a2-rgb),0.13); padding: 1.2rem 1.3rem; margin: 1.15rem 0 1.6rem; }
   .source-attr { font-family: var(--sans); font-size: 0.8rem; color: var(--clay); font-weight: 600; margin-bottom: 0.75rem; line-height: 1.5; }
   .source-body { font-size: 1.02rem; line-height: 1.74; }
   .source-body em { color: var(--a2); font-style: italic; }
   .toggle-btn { font-family: var(--sans); background: transparent; border: none; color: var(--a1); cursor: pointer; font-size: 0.88rem; font-weight: 600; text-decoration: underline; padding: 0.7rem 0 0; }
-  .toggle-body { display: none; margin-top: 0.7rem; padding-top: 0.7rem; border-top: 1px dashed var(--hair-strong); font-size: 0.94rem; color: var(--muted); line-height: 1.66; }
+  .toggle-body { display: none; margin-top: 0.7rem; padding-top: 0.7rem; border-top: 1px dashed rgba(123,114,99,0.45); font-size: 0.94rem; color: #55504a; line-height: 1.66; }
   .toggle-body.open { display: block; }
 
   /* Questions */
   .q-text { font-size: 1.16rem; line-height: 1.5; font-weight: 600; margin-bottom: 1.2rem; }
   .options { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.2rem; }
-  .option { display: flex; align-items: flex-start; gap: 0.85rem; padding: 1rem 1.05rem; background: var(--sand); border: 1px solid var(--hair); cursor: pointer; font-family: var(--serif); text-align: left; font-size: 0.99rem; line-height: 1.55; color: var(--ink); width: 100%; }
+  .option { display: flex; align-items: flex-start; gap: 0.85rem; padding: 1rem 1.05rem; background: var(--sand); border: 1px solid rgba(27,42,51,0.13); cursor: pointer; font-family: var(--serif); text-align: left; font-size: 0.99rem; line-height: 1.55; color: var(--ink); width: 100%; }
   .option:hover:not(:disabled) { background: var(--cut); border-color: var(--a1); }
   .option:disabled { cursor: default; }
   .option.selected { background: var(--cut); border-color: var(--a1); border-width: 2px; padding: 0.94rem 0.99rem; }
-  .option.correct { background: var(--ok-bg); border-color: var(--a2); border-width: 2px; padding: 0.94rem 0.99rem; }
-  .option.wrong { background: var(--no-bg); border-color: var(--clay); border-width: 2px; padding: 0.94rem 0.99rem; }
+  .option.correct { background: #E2EDE4; border-color: var(--a2); border-width: 2px; padding: 0.94rem 0.99rem; }
+  .option.wrong { background: #F2DDD3; border-color: var(--clay); border-width: 2px; padding: 0.94rem 0.99rem; }
   .option.dimmed { opacity: 0.46; }
-  body.alt .option.dimmed { opacity: 0.72; }
   .opt-letter { font-family: var(--serif); font-weight: 800; color: var(--a1); min-width: 1.1rem; }
   .opt-text { flex: 1; }
   .opt-mark { font-weight: 700; font-size: 1.1rem; }
-  .explanation { background: var(--cut); border: 1px solid var(--hair); border-left: 5px solid var(--a2); padding: 1.15rem 1.2rem; }
+  .explanation { background: var(--cut); border: 1px solid rgba(27,42,51,0.12); border-left: 5px solid var(--a2); padding: 1.15rem 1.2rem; }
   .expl-label { font-family: var(--sans); font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--a2); font-weight: 700; margin-bottom: 0.5rem; }
   .expl-text { line-height: 1.7; font-size: 0.96rem; }
   .chip { display: inline-block; font-family: var(--sans); padding: 0.22rem 0.65rem; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
-  .chip-argue { background: var(--chip-a-bg); color: var(--chip-a-fg); }
-  .chip-evidence { background: var(--chip-a-bg); color: var(--chip-a-fg); }
-  .chip-weigh { background: var(--a2); color: var(--on-a2); }
-  .chip-extract { background: var(--chip-a-bg); color: var(--chip-a-fg); }
-  .chip-interpret { background: var(--chip-b-bg); color: var(--chip-b-fg); }
-  .chip-evaluate { background: var(--a2); color: var(--on-a2); }
-  .chip-instinct { background: var(--chip-c-bg); color: var(--clay); }
+  .chip-argue { background: #E7D6C4; color: #7B3F1C; }
+  .chip-evidence { background: #E7D6C4; color: #7B3F1C; }
+  .chip-weigh { background: var(--a2); color: #F0E3CF; }
+  .chip-extract { background: #E7D6C4; color: #7B3F1C; }
+  .chip-interpret { background: #DCE3D4; color: #3F5A38; }
+  .chip-evaluate { background: var(--a2); color: #F0E3CF; }
+  .chip-instinct { background: #EADFC9; color: var(--clay); }
 
   /* Reopen the source from inside a question */
-  .srcpeek { border: 1px solid var(--clay); background: rgba(var(--a1-rgb),0.07); margin: 0 0 1rem; }
+  .srcpeek { border: 1px solid var(--clay); background: rgba(160,82,45,0.06); margin: 0 0 1rem; }
   .srcpeek summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 0.85rem; color: var(--clay); }
   .srcpeek summary::-webkit-details-marker { display: none; }
   .srcpeek .chev { flex: 0 0 auto; transition: transform 0.18s ease; }
@@ -562,32 +490,6 @@ body.alt .figure figcaption { border-top-color: var(--a1); }
   .srcpeek .peek-body { padding: 0 0.85rem 0.85rem; font-size: 0.94rem; line-height: 1.62; border-top: 1px solid var(--rule); margin: 0 0.85rem; padding-left: 0; padding-right: 0; }
   .srcpeek .peek-body p { margin: 0.7rem 0 0; }
 
-  /* v2.1 multi-source reopen. Tabs plus a swipeable track, so every source in
-     the file is reachable from any question. Absent on a single-source lesson,
-     which renders exactly as it did before. */
-  .srcpeek.multi .peek-body { padding-bottom: 0.5rem; }
-  .peek-tabs { display: flex; gap: 0.4rem; overflow-x: auto; padding: 0.7rem 0 0.6rem;
-    -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-  .peek-tabs::-webkit-scrollbar { display: none; }
-  .peek-tab { flex: 0 0 auto; min-height: 40px; padding: 0.45rem 0.85rem;
-    font-family: var(--sans); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
-    text-transform: uppercase; cursor: pointer;
-    background: transparent; color: var(--muted);
-    border: 1px solid var(--rule); border-radius: 0; }
-  .peek-tab.on { background: var(--a1); color: var(--on-a1); border-color: var(--a1); }
-  .peek-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch; scrollbar-width: none; gap: 0; }
-  .peek-track::-webkit-scrollbar { display: none; }
-  .peek-slide { flex: 0 0 100%; scroll-snap-align: start; padding-right: 0.1rem; }
-  .peek-slide .peek-attr { font-family: var(--sans); font-size: 0.66rem; font-weight: 700;
-    line-height: 1.45; color: var(--muted); padding-bottom: 0.5rem; margin-bottom: 0.6rem;
-    border-bottom: 1px solid var(--rule); }
-  .peek-slide p { margin: 0.7rem 0 0; }
-  .srcpeek.multi::after { content: "Swipe, or tap a source above."; display: block;
-    font-family: var(--sans); font-size: 0.66rem; letter-spacing: 0.06em; color: var(--muted);
-    padding: 0.55rem 0 0.2rem; }
-  .srcpeek.multi:not([open])::after { display: none; }
-
   .marks { font-family: var(--mono, var(--sans)); font-size: 0.68rem; letter-spacing: 0.1em;
     text-transform: uppercase; color: var(--a1); font-weight: 700; margin-left: 0.7rem; }
   .q-meta { margin-bottom: 0.9rem; }
@@ -595,17 +497,17 @@ body.alt .figure figcaption { border-top-color: var(--a1); }
   /* order + sort interactions */
   .inter { margin: 0.4rem 0 1rem; }
   .inter-pool { display: flex; flex-direction: column; gap: 0.5rem; }
-  .inter-item { font-family: var(--serif); text-align: left; padding: 0.85rem 1rem; background: var(--sand); border: 1px solid var(--hair); cursor: pointer; font-size: 0.97rem; line-height: 1.5; color: var(--ink); display: flex; gap: 0.7rem; align-items: baseline; }
+  .inter-item { font-family: var(--serif); text-align: left; padding: 0.85rem 1rem; background: var(--sand); border: 1px solid rgba(27,42,51,0.16); cursor: pointer; font-size: 0.97rem; line-height: 1.5; color: var(--ink); display: flex; gap: 0.7rem; align-items: baseline; }
   .inter-item:hover:not(:disabled) { border-color: var(--a1); background: var(--cut); }
   .inter-item .rank { font-family: var(--sans); font-weight: 800; color: var(--a1); min-width: 1.4rem; }
   .inter-placed { background: var(--cut); border-color: var(--a2); }
-  .inter-item.ok { background: var(--ok-bg); border-color: var(--a2); }
-  .inter-item.no { background: var(--no-bg); border-color: var(--clay); }
+  .inter-item.ok { background: #E2EDE4; border-color: var(--a2); }
+  .inter-item.no { background: #F2DDD3; border-color: var(--clay); }
   .sort-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-  .sort-col { background: var(--inset); border: 1px dashed var(--hair-strong); padding: 0.7rem; min-height: 4rem; }
+  .sort-col { background: rgba(255,255,255,0.4); border: 1px dashed rgba(27,42,51,0.28); padding: 0.7rem; min-height: 4rem; }
   .sort-col h4 { font-family: var(--sans); font-size: 0.76rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--clay); font-weight: 700; margin-bottom: 0.6rem; text-align: center; }
   .sort-btns { display: flex; gap: 0.4rem; margin-top: 0.5rem; }
-  .sort-place { font-family: var(--sans); flex: 1; font-size: 0.78rem; font-weight: 700; padding: 0.4rem; background: var(--paper); border: 1px solid var(--hair-strong); cursor: pointer; color: var(--ink); }
+  .sort-place { font-family: var(--sans); flex: 1; font-size: 0.78rem; font-weight: 700; padding: 0.4rem; background: var(--paper); border: 1px solid rgba(27,42,51,0.24); cursor: pointer; color: var(--ink); }
 
   /* Running summary */
   .runsum { background: rgba(var(--a2-rgb),0.08); border: 1px solid rgba(var(--a2-rgb),0.28); border-left: 5px solid var(--a2); padding: 1.3rem 1.4rem; }
@@ -616,18 +518,18 @@ body.alt .figure figcaption { border-top-color: var(--a1); }
   .runsum li.fresh { font-weight: 700; color: var(--a2); }
 
   /* Popup */
-  .pop-back { position: fixed; inset: 0; background: var(--scrim); display: flex; align-items: center; justify-content: center; padding: 1.5rem; z-index: 50; }
+  .pop-back { position: fixed; inset: 0; background: rgba(27,42,51,0.5); display: flex; align-items: center; justify-content: center; padding: 1.5rem; z-index: 50; }
   .pop { background: var(--paper); border-top: 5px solid var(--a2); padding: 1.6rem 1.5rem; max-width: 30rem; width: 100%; box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
   .pop-label { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--a2); font-weight: 700; margin-bottom: 0.8rem; }
   .pop-text { font-size: 1.1rem; line-height: 1.6; font-weight: 600; color: var(--ink); margin-bottom: 1.3rem; }
-  .pop-btn { font-family: var(--sans); width: 100%; padding: 0.9rem; background: var(--a2); border: none; color: var(--on-a2); font-size: 0.98rem; font-weight: 700; cursor: pointer; }
+  .pop-btn { font-family: var(--sans); width: 100%; padding: 0.9rem; background: var(--a2); border: none; color: #F7F1E4; font-size: 0.98rem; font-weight: 700; cursor: pointer; }
 
   /* Nav */
   .nav { display: flex; justify-content: space-between; gap: 0.8rem; margin-top: 1rem; }
-  .btn-secondary { font-family: var(--sans); padding: 0.8rem 1.2rem; background: transparent; border: 1px solid var(--hair-strong); color: var(--ink); font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+  .btn-secondary { font-family: var(--sans); padding: 0.8rem 1.2rem; background: transparent; border: 1px solid rgba(27,42,51,0.28); color: var(--ink); font-size: 0.9rem; font-weight: 600; cursor: pointer; }
   .btn-secondary:hover:not(:disabled) { background: var(--paper); }
-  .btn-primary { font-family: var(--sans); padding: 0.85rem 1.5rem; background: var(--a2); border: none; color: var(--on-a2); font-size: 0.95rem; cursor: pointer; font-weight: 700; }
-  .btn-primary:hover:not(:disabled) { background: var(--a2-deep); }
+  .btn-primary { font-family: var(--sans); padding: 0.85rem 1.5rem; background: var(--a2); border: none; color: #F7F1E4; font-size: 0.95rem; cursor: pointer; font-weight: 700; }
+  .btn-primary:hover:not(:disabled) { background: #164C3F; }
   .btn-primary:disabled { opacity: 0.34; cursor: not-allowed; }
 
   /* Results */
@@ -635,23 +537,33 @@ body.alt .figure figcaption { border-top-color: var(--a1); }
   .results-eyebrow { font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--clay); font-weight: 700; margin-bottom: 0.8rem; }
   .results-title { font-family: var(--sans); font-size: clamp(1.9rem,5.5vw,2.7rem); font-weight: 800; letter-spacing: -0.02em; }
   .score-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(130px,1fr)); gap: 0.9rem; margin-bottom: 1.4rem; }
-  .score-block { background: var(--paper); border: 1px solid var(--hair); border-top: 4px solid var(--a1); padding: 1.3rem 0.8rem; text-align: center; }
+  .score-block { background: var(--paper); border: 1px solid rgba(27,42,51,0.12); border-top: 4px solid var(--a1); padding: 1.3rem 0.8rem; text-align: center; }
   .score-num { font-family: var(--serif); font-size: 2.6rem; font-weight: 800; color: var(--ink); line-height: 1; letter-spacing: -0.03em; }
   .score-den { font-family: var(--serif); font-size: 1.1rem; color: var(--fade); font-weight: 500; }
   .score-word { font-family: var(--serif); font-size: 1.3rem; font-weight: 800; color: var(--a2); line-height: 2; }
   .score-label { font-family: var(--sans); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fade); margin-top: 0.5rem; font-weight: 700; }
   .grade-desc { text-align: center; margin-bottom: 1.6rem; padding: 0 0.5rem; line-height: 1.66; }
-  .breakdown { background: var(--paper); border: 1px solid var(--hair); padding: 1.3rem; margin-bottom: 1.4rem; }
+  .breakdown { background: var(--paper); border: 1px solid rgba(27,42,51,0.12); padding: 1.3rem; margin-bottom: 1.4rem; }
   .breakdown-label { font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--a2); font-weight: 700; margin-bottom: 1rem; text-align: center; }
   .bd-row { display: grid; grid-template-columns: 1fr 110px 46px; gap: 0.7rem; align-items: center; margin-bottom: 0.7rem; font-family: var(--serif); font-size: 0.9rem; }
   .bd-name { font-weight: 600; }
-  .bd-bar { height: 9px; background: var(--hair); overflow: hidden; }
+  .bd-bar { height: 9px; background: rgba(27,42,51,0.08); overflow: hidden; }
   .bd-fill { height: 100%; background: var(--a2); }
   .bd-score { color: var(--fade); text-align: right; font-weight: 700; }
   .results-actions { display: flex; gap: 0.8rem; margin-top: 1.6rem; }
   .results-actions button { flex: 1; }
   .hidden { display: none !important; }
 
+body.alt .chip-argue, body.alt .chip-evidence { background: rgba(212,115,106,0.20) !important; }
+body.alt .chip-instinct { background: rgba(231,235,238,0.14) !important; }
+#kula-mode-toggle, .mode-toggle { min-height: 44px !important; padding-top: 0.6rem !important; padding-bottom: 0.6rem !important; box-sizing: border-box !important; }
+#next-btn, #begin-btn, #kdone-btn, #kretake-btn { min-height: 44px !important; }
+/* cw-cta */
+body.alt .btn-primary, body.alt #next-btn { color: #14181c !important; }
+body.alt .btn-primary .sa, body.alt #next-btn .sa, body.alt .btn-primary svg, body.alt #next-btn svg { color: #14181c !important; fill: #14181c !important; }
+
+/* cw-chip-inst */
+body.alt .chip-instinct { color: #14181c !important; }
 </style>
 </head>
 <body>
@@ -677,7 +589,7 @@ const COVER = {
   "title": "Putting It Together",
   "lines": [
     "Everything up to here was practice.",
-    "This one is built to the shape of the paper you will sit.",
+    "This one is at exam standard, marked the way the exam is marked.",
     "Twenty-six marks, and a paragraph at the end."
   ],
   "begin": "Begin Lesson 5",
@@ -691,7 +603,7 @@ const RESULTS = {
   "done": {
     "label": "Unit complete",
     "title": "Putting It Together",
-    "text": "Tap Done to continue to What Stuck."
+    "text": "Tap Done, then sit What Stuck and compare it with the score you wrote down at the start."
   },
   "footer": "Next: What Stuck, the same eighteen facts asked from the other direction.",
   "bands": {
@@ -707,19 +619,19 @@ const FLOW = [
   {
     "type": "content",
     "tag": "How this works",
-    "html": "<h2>How this run is built</h2><p>Every question below is written to the exact shape of a full source question: the same number of sub-questions on each source, the same mark allocations, the same command words, and the paragraph question in the same place. The questions themselves are ours.</p><p>The allocation is printed on each one. A (2 x 2) wants two points, each worth two marks, so two developed sentences and not one.</p><p>Both sources are real 1948 documents. Source A is an American diplomatic note and Source B is the Soviet reply, both printed in a United States government report, which is why they can be published here.</p>",
-    "remember": "The questions are ours. The shape, the allocations and the sources are the real thing, so treat the timing as the real thing too.",
+    "html": "<h2>This one is real</h2><p>Every question below is at exam standard and at its real mark allocation. Your answers are checked against the way the paper is marked.</p><p>The allocation is printed on each question. A (2 x 2) wants two points, each worth two marks, so two sentences and not one.</p><p>Both sources are extracts from a United States government report, which is public domain, so they can be published outside an exam paper.</p>",
+    "remember": "The allocations, sources and marking are all at exam standard. Treat it as the exam, because it is.",
     "terms": [
       {
-        "term": "Mark allocation",
-        "def": "The bracket beside a question. It tells you how many points to make and how far to take each one. Read it before you write."
+        "term": "Marking guidelines",
+        "def": "The official document telling markers what earns marks. Every answer here is checked against it."
       }
     ]
   },
   {
     "type": "content",
     "tag": "The question",
-    "html": "<h2>How did Berlin become a focal point of Cold War tension between the USSR and the USA in 1948?</h2><p>That is the question this whole run is feeding, and the final paragraph has to answer it.</p><p>Hold it in mind while you read. Every question below is feeding you evidence for that paragraph, and the paragraph is worth eight of the twenty-six marks.</p>",
+    "html": "<h2>How did Berlin become a focal point of Cold War tension between the USSR and the USA in 1948?</h2><p>That is the lead question, and it is the question the final paragraph has to answer.</p><p>Hold it in mind while you read. Every question below is feeding you evidence for that paragraph, and the paragraph is worth eight of the twenty-six marks.</p>",
     "terms": [
       {
         "term": "Focal point",
@@ -729,11 +641,11 @@ const FLOW = [
   },
   {
     "type": "source",
-    "tag": "Source A",
-    "sourceLabel": "Source A",
+    "tag": "Source 1B",
+    "sourceLabel": "Source 1B",
     "html": "<h2>The American note, 6 July 1948</h2><p>Delivered to the Soviet government two weeks after the roads closed.</p><p><strong>First pass:</strong> what does the United States say its right to be in Berlin rests on?</p><p><strong>Second pass:</strong> count the reasons it gives for staying. There are more than you think.</p>",
     "source": {
-      "attr": "Source A: from The Berlin Crisis: A Report on the Moscow Discussions, 1948, issued by the United States Department of State and delivered to representatives of the USSR on 6 July 1948. Government Printing Office, Washington DC. A United States government work.",
+      "attr": "Source 1B: from The Berlin Crisis: A Report on the Moscow Discussions, 1948, issued by the United States Department of State and delivered to representatives of the USSR on 6 July 1948. Government Printing Office, Washington DC. A United States government work.",
       "body": "<p>The Governments of the United States, the United Kingdom and France decided to make formal representations to the government of the USSR. The Soviet Government was informed that the United States regarded the blockade measures as a 'clear violation of existing agreements concerning the administration of Berlin by the four occupying powers'.</p><p>The United States Government categorically [firmly] asserted that it was in occupation of its sector of Berlin with free access thereto 'as a matter of established right derived from the defeat and surrender of Germany and confirmed by formal agreements among the principal Allies'.</p><p>The United States also emphatically [forcefully] declared that it would 'not be induced [pushed] by threats, pressures or other actions to abandon these rights'.</p><p>This consideration, together with responsibility for the physical well-being of the population of its sector of Berlin, including hundreds of thousands of women and children, obliged [forced] the United States to insist that 'in accordance with existing agreements the arrangements for the movement of freight and passenger traffic between the western zones and Berlin be fully restored'.</p><p>The United States emphasised again its willingness to settle by negotiation, or by any of the other peaceful methods provided for in article 33 of the Charter of the United Nations.</p>",
       "toggle": "Two things about how this is written. It is a report describing a note, so the quoted phrases inside it are the actual words handed to Moscow, and those are the ones a quote question wants. And notice the order of the argument. Rights first, then the refusal to be pushed, then the women and children, then the offer to negotiate. That order is deliberate: it puts the legal case ahead of the humanitarian one, so nobody can say the West is only there out of sentiment.",
       "toggleLabel": "What does this actually mean?"
@@ -753,7 +665,7 @@ const FLOW = [
     "type": "question",
     "level": "Extract",
     "marks": "(1 x 2)  2 marks",
-    "q": "Question 1 of 8. Define the term blockade in your own words.",
+    "q": "1.2.1  In your own words, define the term blockade.",
     "options": [
       "Sealing a place off so that goods and people cannot get in",
       "Placing soldiers inside a city in order to occupy and hold it",
@@ -761,7 +673,7 @@ const FLOW = [
       "Bombing the roads and railways that lead into an enemy city"
     ],
     "correct": 0,
-    "explanation": "Two marks for a definition, so give the whole idea rather than a fragment. The expected answer is sealing a place off to stop goods or people entering or leaving. Option {opt2} is a trade embargo, which is close enough to tempt you and is not the same thing. The question asks what was stopped, and that was the movement, not the trading.",
+    "explanation": "Two marks for a definition, so give the whole idea rather than a fragment. The marking accepts sealing a place off to stop goods or people entering or leaving. Option {opt2} is a trade embargo, which is close enough to tempt you and is not the same thing. A marker wants the movement stopped, not the trading.",
     "noSource": true,
     "part": "Berlin could be sealed off because it lay inside the Soviet zone"
   },
@@ -769,7 +681,7 @@ const FLOW = [
     "type": "question",
     "level": "Interpret",
     "marks": "(2 x 2)  4 marks",
-    "q": "Question 2 of 8. Source A calls the Soviet measures a breach of what the four powers had agreed. Explain the reasoning behind that description.",
+    "q": "1.2.2  Explain why the USA saw the blockade as 'a clear violation of existing agreements'.",
     "options": [
       "The four powers had agreed jointly to administer Berlin, and this was one acting alone",
       "The Soviet Union had never signed any of the agreements about Berlin in the first place",
@@ -777,14 +689,14 @@ const FLOW = [
       "The Western powers had already left Berlin, so the Soviet Union had no right to close it"
     ],
     "correct": 0,
-    "explanation": "Four marks means two developed points, so give the agreement and then what breaking it threatened. Berlin was to be run by four powers together, and one of them closed it alone. Option {opt3} contradicts the whole source, since this note is written by a government insisting it stays. Argue against your own source and your evidence is working against you.",
+    "explanation": "Four marks means two developed points, so give the agreement and then what breaking it threatened. Berlin was to be run by four powers together, and one of them closed it alone. Option {opt3} contradicts the whole source, since this note is written by a government insisting it stays. Argue against your own source and a marker can award you nothing.",
     "part": "The four-power agreement on Berlin was broken by one power acting alone"
   },
   {
     "type": "question",
     "level": "Extract",
     "marks": "(3 x 1)  3 marks",
-    "q": "Question 3 of 8. Quote THREE reasons given in Source A for the American decision to stay in Berlin.",
+    "q": "1.2.3  From Source 1B, quote THREE reasons the USA was determined to stay in Berlin.",
     "options": [
       "Established right from defeat, formal Allied agreements, and its own responsibility here",
       "The United Nations Charter, the airlift already flying, and the new Western currency",
@@ -792,14 +704,14 @@ const FLOW = [
       "Its formal representations, its offer to negotiate, and its request to restore traffic"
     ],
     "correct": 0,
-    "explanation": "Three marks means three separate quotations, so find three and stop hunting. Option {opt3} lists things the source certainly says. Every one of them is about what the United States did rather than why it stayed. Answer the question you were asked. An accurate quote of the wrong thing is still the wrong thing.",
+    "explanation": "Three marks means three separate quotations, so find three and stop hunting. Option {opt3} lists things the source certainly says. Every one of them is about what the United States did rather than why it stayed. Answer the question you were asked, because a marker gives nothing for quoting the wrong thing.",
     "part": "The American case rested on right, on agreement, and on the people in the city"
   },
   {
     "type": "question",
     "level": "Extract",
     "marks": "(1 x 1)  1 mark",
-    "q": "Question 4 of 8. State ONE condition Source A insists on regarding access to the city.",
+    "q": "1.2.4  According to Source 1B, give ONE obligation the USA insisted on regarding the population of its sector.",
     "options": [
       "That freight and passenger traffic between the western zones and Berlin be restored",
       "That the Soviet Union should feed the people living in the western sectors of Berlin",
@@ -807,14 +719,14 @@ const FLOW = [
       "That the new Western currency should be accepted throughout the whole of Berlin"
     ],
     "correct": 0,
-    "explanation": "One mark, so one quotation, and it is the sentence about restoring traffic. Option {opt1} is the reverse of the source. Feeding West Berlin from the Soviet sector was the Soviet offer, and taking it meant giving up the city. That answers with the other side's position, not the one you were asked about.",
+    "explanation": "One mark, so one quotation, and it is the sentence about restoring traffic. Option {opt1} is the reverse of the source. Feeding West Berlin from the Soviet sector was the Soviet offer, and taking it meant giving up the city. A marker sees that as answering with the other side's position, and you lose your mark.",
     "part": "The Americans demanded the routes be reopened, not that Moscow feed the city"
   },
   {
     "type": "question",
     "level": "Interpret",
     "marks": "(2 x 2)  4 marks",
-    "q": "Question 5 of 8. Comment on why Source A stresses a willingness to negotiate while refusing to leave.",
+    "q": "1.2.5  Comment on why the USA stressed that it was willing to settle disagreements with the USSR through negotiation.",
     "options": [
       "It kept the moral advantage and made the Soviet Union look like the aggressor",
       "It showed that the United States was preparing to withdraw from Berlin entirely",
@@ -822,18 +734,18 @@ const FLOW = [
       "It was the only way to keep France and Britain inside the Western alliance"
     ],
     "correct": 0,
-    "explanation": "Four marks, so two developed points. Offering to talk while refusing to leave costs nothing. It also leaves the other side holding the blockade in front of the world. Add that neither side wanted a shooting war and you have both points. Option {opt1} reads the offer as weakness. The opposite argument is in the same paragraph.",
+    "explanation": "Four marks, so two developed points. Offering to talk while refusing to leave costs nothing. It also leaves the other side holding the blockade in front of the world. Add that neither side wanted a shooting war and you have both points. Option {opt1} reads the offer as weakness, and a marker sees the opposite argument in the same paragraph.",
     "part": "Offering to negotiate while refusing to leave put the blame on Moscow"
   },
   {
     "type": "source",
-    "tag": "Source B",
-    "sourceLabel": "Source B",
-    "html": "<h2>The Soviet reply, 14 July 1948</h2><p>Eight days later. Same crisis, and the second source in the paper.</p><p><strong>First pass:</strong> what does the Soviet government say caused the problem?</p><p><strong>Second pass:</strong> hold it against Source A. Neither of them mentions the other's main point.</p>",
+    "tag": "Source 1C",
+    "sourceLabel": "Source 1C",
+    "html": "<h2>The Soviet reply, 14 July 1948</h2><p>Eight days later. Same crisis, and the second source in the paper.</p><p><strong>First pass:</strong> what does the Soviet government say caused the problem?</p><p><strong>Second pass:</strong> hold it against Source 1B. Neither of them mentions the other's main point.</p>",
     "source": {
-      "attr": "Source B: the Soviet reply of 14 July 1948 to the United States note of 6 July, printed in The Berlin Crisis: A Report on the Moscow Discussions, 1948. Government Printing Office, Washington DC. A United States government work.",
+      "attr": "Source 1C: the Soviet reply of 14 July 1948 to the United States note of 6 July, printed in The Berlin Crisis: A Report on the Moscow Discussions, 1948. Government Printing Office, Washington DC. A United States government work.",
       "body": "<p>Berlin lies in the centre of the Soviet zone and is part of that zone. The interests of the Berlin population do not permit a situation in which, in Berlin or only in the western sectors of Berlin, there shall be introduced special currency which has no validity in the Soviet zone.</p><p>Moreover, the carrying out of a separate monetary [financial] reform in the western zones of Germany has placed Berlin and the whole Soviet zone of occupation in a situation in which the entire mass of currency notes, which were cancelled in the western zone, threatened to pour into Berlin and the Soviet zone of occupation of Germany.</p><p>The Soviet Command has been forced, therefore, to adopt certain urgent measures for the protection of the interests of the German population and also of the economy of the Soviet zone of occupation and the area of 'Greater Berlin'.</p>",
-      "toggle": "Three phrases carry the argument. Berlin lies in the centre of the Soviet zone is a geographical fact used as a legal claim, and it is the opposite of Source A, which rests on agreements rather than on the map. Has been forced presents the blockade as a response rather than a decision. And notice what the whole extract never mentions: the four-power agreements that Source A is built on. Each note answers a case the other one is not making.",
+      "toggle": "Three phrases carry the argument. Berlin lies in the centre of the Soviet zone is a geographical fact used as a legal claim, and it is the opposite of Source 1B, which rests on agreements rather than on the map. Has been forced presents the blockade as a response rather than a decision. And notice what the whole extract never mentions: the four-power agreements that Source 1B is built on. Each note answers a case the other one is not making.",
       "toggleLabel": "What does this actually mean?"
     },
     "terms": [
@@ -851,7 +763,7 @@ const FLOW = [
     "type": "question",
     "level": "Extract",
     "marks": "(2 x 1)  2 marks",
-    "q": "Question 6 of 8. Give TWO reasons from Source B for Soviet opposition to a currency used only in the western sectors.",
+    "q": "1.3.1  From Source 1C, give TWO reasons the USSR opposed a special currency for western Berlin only.",
     "options": [
       "Berlin lies inside the Soviet zone, and cancelled notes threatened to pour eastward",
       "The currency was printed in America, and the Soviet Union was never consulted",
@@ -859,14 +771,14 @@ const FLOW = [
       "The four-power agreements did not allow a currency change without Soviet consent"
     ],
     "correct": 0,
-    "explanation": "Two marks means two quotations, and both sit in the first two paragraphs. Option {opt3} sounds exactly like the kind of thing this note would say, which is why it tempts you. The Soviet reply never mentions the agreements at all. Quote what is on the page rather than what you expect to find there.",
+    "explanation": "Two marks means two quotations, and both sit in the first two paragraphs. Option {opt3} sounds exactly like the kind of thing this note would say, which is why it tempts you. The Soviet reply never mentions the agreements at all. Quote what is on the page rather than what you expect, or a marker cannot credit it.",
     "part": "Moscow argued from geography and from the currency, not from the agreements"
   },
   {
     "type": "question",
     "level": "Interpret",
     "marks": "(1 x 2)  2 marks",
-    "q": "Question 7 of 8. Explain the concept monetary reform in the context of the divided zones in 1948.",
+    "q": "1.3.2  In the context of the Berlin zones in 1948, explain the concept monetary reform.",
     "options": [
       "Introducing a new currency in the western zones that excluded the Soviet zone",
       "Allowing two different currencies to circulate side by side across all of Berlin",
@@ -874,18 +786,18 @@ const FLOW = [
       "Removing all paper money from Germany and returning the country to barter"
     ],
     "correct": 0,
-    "explanation": "Two marks, so name the change and say who it left out. The new currency went into the three western zones and West Berlin, and not into the Soviet zone. Option {opt1} describes what the Soviet note feared rather than what actually happened. Answer with that and you have given the consequence of the reform instead of the reform.",
+    "explanation": "Two marks, so name the change and say who it left out. The new currency went into the three western zones and West Berlin, and not into the Soviet zone. Option {opt1} describes what the Soviet note feared rather than what actually happened. A marker reads that as confusing the reform with its consequence, and you lose the mark.",
     "part": "A new currency in the West alone is what turned the dispute into a crisis"
   },
   {
     "type": "content",
     "tag": "The finale",
-    "html": "<h2>The paragraph question. Eight marks.</h2><p>Using the two sources and your own knowledge, write a paragraph of about eight lines, roughly 80 words, explaining how Berlin became the focal point of Cold War tension between the USSR and the USA in 1948.</p><p>Eight of the twenty-six marks are here, and this is the only question in the run that needs your own knowledge. Quote the two sources alone and you have answered half of it. The next three questions build the paragraph with you, one move at a time.</p>",
+    "html": "<h2>1.6  The paragraph question. Eight marks.</h2><p><em>Using the information in the relevant sources and your own knowledge, write a paragraph of about EIGHT lines (about 80 words) explaining how Berlin turned into a flashpoint of Cold War tension between the USSR and the USA in 1948.</em></p><p>Eight of the twenty-six marks are here, and this is the only question in the run that requires your own knowledge. Quote the sources alone and you cap out in the middle band.</p><p>The next three questions build it with you, one move at a time.</p>",
     "remember": "Sources AND own knowledge. A paragraph built only from the extracts cannot reach the top band, however well written.",
     "terms": [
       {
         "term": "Own knowledge",
-        "def": "Relevant fact you bring yourself, which is not in the sources. The paragraph question is not finished without it."
+        "def": "Relevant fact you bring yourself, which is not in the sources. Required for full marks on the paragraph."
       }
     ]
   },
@@ -893,14 +805,14 @@ const FLOW = [
     "type": "question",
     "level": "Evaluate",
     "marks": "Topic sentence",
-    "q": "Which opening sentence does what the question asks?",
+    "q": "Which opening sentence would earn the marks?",
     "options": [
       "Berlin became the flashpoint because both sides claimed a right to be there",
       "Berlin was divided into four sectors in 1945 and lay inside the Soviet zone",
       "The Berlin blockade was one of the most dramatic events of the entire Cold War"
     ],
     "correct": 0,
-    "explanation": "A topic sentence answers the question in one line, and this question asked how Berlin became the focal point. Option {opt1} starts the background instead. That is the commonest way this paragraph goes wrong: it tells the story and never says what the story did. Option {opt2} praises the event without giving you anything to develop.",
+    "explanation": "A topic sentence answers the question in one line, and this question asked how Berlin became the focal point. Option {opt1} starts the background instead. That is the commonest way this paragraph goes wrong, and a marker reads it as narrative. Option {opt2} praises the event without giving you anything to develop.",
     "noSource": true
   },
   {
@@ -915,7 +827,7 @@ const FLOW = [
       "A separate monetary reform was carried out in the western zones of Germany"
     ],
     "correct": 0,
-    "explanation": "Own knowledge means a relevant fact the sources do not contain. The airlift is the obvious one, because neither note mentions it. The other three are printed in front of you, which is exactly why they feel safe to write. Repeat a source and call it your own knowledge and you have added nothing to it.",
+    "explanation": "Own knowledge means a relevant fact the sources do not contain. The airlift is the obvious one, because neither note mentions it. The other three are printed in front of you, which is exactly why they feel safe to write. Repeat a source and call it your own knowledge and a marker gains you nothing.",
     "noSource": true
   },
   {
@@ -936,7 +848,7 @@ const FLOW = [
       2,
       3
     ],
-    "explanation": "Topic sentence, source evidence, own knowledge, conclusion. That order matters, because this question is asking for a shape as well as a set of facts. Put your own knowledge first and the paragraph reads as an essay that has ignored the sources. Leave the closing sentence off, which is the commonest omission of all, and you cap yourself below the top band.",
+    "explanation": "Topic sentence, source evidence, own knowledge, conclusion. That order matters because a marker reads for structure as well as content in this question. Put your own knowledge first and the paragraph reads as an essay that has ignored the sources. Leave the closing sentence off, which is the commonest omission of all, and you cap yourself below the top band.",
     "noSource": true
   },
   {
@@ -945,35 +857,35 @@ const FLOW = [
     "heading": "What you were marked on",
     "cards": [
       {
-        "lead": "Question 1  Extract, 2",
+        "lead": "1.2.1  Extract, 2",
         "body": "Define blockade. Two marks, so the whole idea: sealing a place off so people and goods cannot move."
       },
       {
-        "lead": "Question 2  Interpret, 4",
+        "lead": "1.2.2  Interpret, 4",
         "body": "Why the blockade was a clear violation. Four powers agreed to run Berlin jointly; one acted alone."
       },
       {
-        "lead": "Question 3  Extract, 3",
+        "lead": "1.2.3  Extract, 3",
         "body": "Three quoted reasons for staying: established right, formal agreements, responsibility for the population."
       },
       {
-        "lead": "Question 4  Extract, 1",
+        "lead": "1.2.4  Extract, 1",
         "body": "One obligation. That freight and passenger traffic between the western zones and Berlin be restored."
       },
       {
-        "lead": "Question 5  Interpret, 4",
+        "lead": "1.2.5  Interpret, 4",
         "body": "Why emphasise negotiation. It costs nothing, keeps the moral advantage, and leaves Moscow holding the blockade."
       },
       {
-        "lead": "Question 6  Extract, 2",
+        "lead": "1.3.1  Extract, 2",
         "body": "Two Soviet reasons. Berlin lies inside the Soviet zone, and cancelled notes threatened to pour east."
       },
       {
-        "lead": "Question 7  Interpret, 2",
+        "lead": "1.3.2  Interpret, 2",
         "body": "Monetary reform. A new currency in the western zones and West Berlin, excluding the Soviet zone."
       },
       {
-        "lead": "Question 8  Evaluate, 8",
+        "lead": "1.6  Evaluate, 8",
         "body": "The paragraph. Topic sentence, source evidence, own knowledge, conclusion. Own knowledge is required."
       }
     ]
@@ -1011,12 +923,12 @@ const FLOW = [
   {
     "type": "content",
     "tag": "Before you go",
-    "html": "<h2>Two things to do</h2><p>Take What Stuck. It asks the same eighteen facts as the check you did before Lesson 1, approached from the other side, so it measures what stuck rather than what you recognised.</p><p>Then sit this run again with a clock. Twenty-six marks is about thirty-one minutes at the pace the paper expects. Doing it once slowly teaches the method; doing it once fast tells you whether you have it.</p>"
+    "html": "<h2>Two things to do</h2><p>Take What Stuck. It asks the same eighteen facts as the check you did before Lesson 1, approached from the other side, so it measures what stuck rather than what you recognised.</p><p>Then sit this run again with a clock. Twenty-six marks is about thirty-one minutes in the exam. Doing it once slowly teaches the method; doing it once fast tells you whether you have it.</p>"
   },
   {
     "type": "content",
     "tag": "What this run leaves out",
-    "html": "<h2>Being straight with you about this run</h2><p>A real Paper 1 source question is fifty marks. This run is twenty-six, and you should know what that means.</p><p>The questions are written by us, to the shape of a real one. What that buys you is that both sources here are genuine 1948 documents rather than substitutes: a book extract and a newspaper cartoon that a source question could carry are still in copyright, and the exemption that lets an exam paper reproduce them does not reach a product like this one. Writing our own questions means we could build the run around the two documents that are free to publish.</p><p>There is no comparison question and no reliability question here, and that is structural rather than a cut. The paragraph question is eight marks and it is the top skill, which fills the evaluation share of a run this size on its own. Your comparison practice is in Lesson 2 and your usefulness and reliability practice is in Lesson 3.</p><p>Your answers are checked against an answer standard written against the published rubric, with every expected point traced to the source it comes from or to the reading it comes from.</p>"
+    "html": "<h2>Being straight with you about this run</h2><p>The full source question is fifty marks and this run is twenty-six. You should know what was cut and why.</p><p>Two of the four sources in the addendum could not be published: an extract from a book about the Berlin Wall, and a newspaper cartoon from the Kansas City Star. Both are still in copyright, and the exam exemption that lets a paper reproduce them does not reach a product like this one. The questions attached to them went with them.</p><p>The comparison question and the limitations question were also cut, because the paragraph question is the only Level 3 item a run this size can carry. Your comparison practice is in Lesson 2 and your usefulness and reliability practice is in Lesson 3.</p><p>Everything that remains is real: the questions, the sources, the allocations and the marking. Nothing here was invented to fill a gap.</p>"
   },
   {
     "type": "content",
@@ -1025,6 +937,7 @@ const FLOW = [
   }
 ];
 
+// ---- identity of the five skill/tier labels ----
 const CHIP = {
   Argue:{cls:"chip-argue"}, Evidence:{cls:"chip-evidence"}, Weigh:{cls:"chip-weigh"},
   Extract:{cls:"chip-extract"}, Interpret:{cls:"chip-interpret"}, Evaluate:{cls:"chip-evaluate"},
@@ -1199,78 +1112,24 @@ function renderStat(item){
 
 // Reopen strip: shown on a question that follows a source, so the learner
 // never has to tap Back to reread the extract.
-//
-// v2.1. Was: the strip offered LAST_SOURCE only. That is correct for a lesson
-// built on one source and wrong for a capstone, where the paragraph question
-// asks for all of them and a learner on the closing screens could reach only
-// the most recent. Now every source seen so far in the file is reachable: a row
-// of tabs, and a swipeable track underneath. One source renders exactly as
-// before, so nothing in the existing corpus changes.
 function sourcePeek(item){
   if(item.noSource) return "";
-  if(item.sourceRef && item.sourceRef.body){
-    return peekShell([item.sourceRef]);
-  }
-  const seen = SOURCES_SEEN.filter(s => s && s.body);
-  if(!seen.length) return "";
-  return peekShell(seen);
-}
-
-function peekShell(list){
-  const many = list.length > 1;
-  const cue = many
-    ? `Tap to read the ${list.length} sources again`
-    : `Tap to read ${esc(list[0].label)} again`;
-  const who = many
-    ? list.map(s=>esc(s.label)).join(" &middot; ")
-    : esc(stripTags(list[0].attr)).slice(0,90);
-  const tabs = many
-    ? `<div class="peek-tabs" role="tablist">${list.map((s,i)=>
-        `<button class="peek-tab${i===list.length-1?" on":""}" data-peek="${i}" role="tab">${esc(s.label)}</button>`).join("")}</div>`
-    : "";
-  const track = `<div class="peek-track" data-peek-track>${list.map(s=>
-      `<div class="peek-slide"><div class="peek-attr">${s.attr}</div>${s.body}</div>`).join("")}</div>`;
-  return `<details class="srcpeek${many?" multi":""}"><summary>
+  const s = item.sourceRef || LAST_SOURCE;
+  if(!s || !s.body) return "";
+  return `<details class="srcpeek"><summary>
       <svg class="chev" width="11" height="13" viewBox="0 0 11 13" fill="none" aria-hidden="true"><path d="M2 1.5 L8.5 6.5 L2 11.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span class="peek-cue">${cue}<span class="peek-who">${who}</span></span>
-    </summary><div class="peek-body">${tabs}${track}</div></details>`;
-}
-
-// Tabs scroll the track; swiping the track updates the tabs. Both work alone,
-// so a learner who never notices the tabs can still swipe, and the other way round.
-function bindPeek(){
-  stage.querySelectorAll(".srcpeek.multi").forEach(d=>{
-    const track = d.querySelector("[data-peek-track]");
-    const tabs  = Array.from(d.querySelectorAll(".peek-tab"));
-    if(!track || !tabs.length) return;
-    const go = i => track.scrollTo({ left: i * track.clientWidth, behavior: "smooth" });
-    tabs.forEach(t => t.addEventListener("click", () => go(parseInt(t.dataset.peek,10))));
-    let tick = null;
-    track.addEventListener("scroll", () => {
-      clearTimeout(tick);
-      tick = setTimeout(() => {
-        const i = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
-        tabs.forEach((t,n) => t.classList.toggle("on", n === i));
-      }, 60);
-    });
-    // open on the source the learner saw last, which is the one they were reading
-    d.addEventListener("toggle", () => {
-      if(d.open) requestAnimationFrame(() => { track.scrollLeft = (tabs.length-1) * track.clientWidth; });
-    });
-  });
+      <span class="peek-cue">Tap to read ${esc(s.label)} again<span class="peek-who">${esc(stripTags(s.attr)).slice(0,90)}</span></span>
+    </summary><div class="peek-body">${s.body}</div></details>`;
 }
 function stripTags(h){ return String(h||"").replace(/<[^>]+>/g,""); }
 
 // ============ SOURCE ============
-// Every source rendered so far, in order, so any later question can reopen all
-// of them. LAST_SOURCE is kept as the final entry for anything still reading it.
-let SOURCES_SEEN = [];
+// The most recent source rendered, so any later question can reopen it in place.
 let LAST_SOURCE = null;
 
 function renderSource(item){
   const s=item.source;
   LAST_SOURCE = { label: item.sourceLabel || item.tag || "the source", attr: s.attr, body: s.body };
-  if(!SOURCES_SEEN.some(x => x.label === LAST_SOURCE.label)) SOURCES_SEEN.push(LAST_SOURCE);
   stage.innerHTML = `
     <div class="card">
       ${item.tag?`<div class="stage-tag">${esc(item.tag)}</div>`:""}
@@ -1504,7 +1363,6 @@ function syncNavCarousel(){
 }
 
 function bindToggles(){
-  bindPeek();
   stage.querySelectorAll("[data-toggle]").forEach(b=>b.addEventListener("click",()=>{
     b.nextElementSibling.classList.toggle("open");
   }));
@@ -1559,7 +1417,7 @@ function showResults(){
     const back=document.createElement("div");
     back.className="pop-back";
     const D = RESULTS.done||{};
-    back.innerHTML=`<div class="pop"><div class="pop-label">${esc(D.label||"Lesson complete")}</div>${D.title?`<h3 style="margin:.4rem 0 .2rem;font-size:1.05rem;">${esc(D.title)}</h3>`:""}<div class="pop-text">${esc(D.text||"Tap Done to continue to the next lesson.")}</div><button class="pop-btn" id="fin-ok">Done</button></div>`;
+    back.innerHTML=`<div class="pop"><div class="pop-label">${esc(D.label||"Lesson complete")}</div>${D.title?`<h3 style="margin:.4rem 0 .2rem;font-size:1.05rem;">${esc(D.title)}</h3>`:""}<div class="pop-text">${esc(D.text||"Tap Done to continue.")}</div><button class="pop-btn" id="fin-ok">Got it</button></div>`;
     document.body.appendChild(back);
     document.getElementById("fin-ok").addEventListener("click",()=>back.remove());
   });
@@ -1608,7 +1466,6 @@ renderCover();
     paint();
   });
   paint();
-
 })();
 </script>
 </body>
