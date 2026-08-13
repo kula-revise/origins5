@@ -854,6 +854,19 @@ body.dark .inter-item.ok span, body.dark .inter-item.ok .rank { color: var(--on-
   .top-meta { padding-right: 9.5rem; }
 }
 
+
+/* ---- The wrong-answer glyph clears 4.5 on the dark ground -----
+   --a1 measured 3.76 against the wrong-option tint once the rgba
+   is composited. The tick and the cross are what carry the state
+   for a learner who cannot separate the two hues, so the glyph
+   has to be legible on its own. 5.57 after this.
+   -------------------------------------------------------------- */
+body.dark .option.wrong .opt-letter, body.dark .option.wrong .opt-mark,
+body.dark .option-btn.wrong .opt-letter, body.dark .option-btn.wrong .opt-mark,
+body.dark .inter-item.no .inter-mark, body.dark .inter-item.no .rank {
+  color: #EFA79E !important;
+}
+
 </style>
 </head>
 <body class="dark">
@@ -1215,7 +1228,7 @@ const FLOW = [
   {
     "type": "content",
     "tag": "Beyond the exam",
-    "html": "<h2>The habit, not the dates</h2><p>Four things you did in this unit have nothing to do with 1948. You asked what a document was written for before asking whether it was true. You held two accounts against each other and asked what each was afraid of. You separated whether a source can be trusted from what it is good evidence of. And you read an action as an admission.</p><p>Those four questions work on a contract, a news report, a company statement or anyone who tells you one thing and does another.</p><p>The history is the training ground. The questions are the thing you keep.</p>"
+    "html": "<h2>The habit, not the dates</h2><p>Four things you did in this unit have nothing to do with 1948. You asked what a document was written for before asking whether it was true. You held two accounts against each other and asked what each was afraid of. You separated whether a source can be trusted from what it is good evidence of. And you read an action as an admission.</p><p>Those four questions work on a contract, a news report, a company statement or anyone who tells you one thing and does another.</p><p>You practised those questions on 1948 because that is what the exam asks about. You will use them on things that have nothing to do with it.</p>"
   },
   {
     "type": "content",
@@ -1783,7 +1796,7 @@ function showResults(){
   });
   /* The button at the end of the lesson is the thing that continues. It does
      not point at a control somewhere else on the page. */
-  document.getElementById("finish-btn").addEventListener("click",()=>{ KulaLMS.advance(); });
+  document.getElementById("finish-btn").onclick = ()=>{ KulaLMS.advance(); };
   KulaLMS.completed();
 }
 
